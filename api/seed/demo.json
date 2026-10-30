@@ -1,0 +1,319 @@
+{
+  "exams": [
+    {
+      "slug": "lat",
+      "name": "LAT",
+      "full_name": "Law Admission Test",
+      "category": "Law",
+      "description": "Law admission test preparation covering English, logical reasoning, legal knowledge and essay writing.",
+      "access": "mixed",
+      "sort": 1
+    },
+    {
+      "slug": "mdcat",
+      "name": "MDCAT",
+      "full_name": "Medical & Dental College Admission Test",
+      "category": "Medical",
+      "description": "Medical and dental college admission test for public and private sector institutions across Pakistan.",
+      "access": "mixed",
+      "sort": 2
+    },
+    {
+      "slug": "ecat",
+      "name": "ECAT",
+      "full_name": "Engineering College Admission Test",
+      "category": "Engineering",
+      "description": "Engineering college admission test practice aligned with UET and provincial entry test patterns.",
+      "access": "mixed",
+      "sort": 3
+    },
+    {
+      "slug": "css",
+      "name": "CSS / PMS",
+      "full_name": "Civil Services Examination",
+      "category": "Civil service",
+      "description": "Competitive examination preparation for compulsory papers, current affairs and essay writing.",
+      "access": "premium",
+      "sort": 4
+    },
+    {
+      "slug": "nts",
+      "name": "NTS NAT",
+      "full_name": "National Aptitude Test",
+      "category": "University entry",
+      "description": "National aptitude test practice for undergraduate admissions across participating universities.",
+      "access": "free",
+      "sort": 5
+    },
+    {
+      "slug": "gat",
+      "name": "GAT General",
+      "full_name": "Graduate Assessment Test",
+      "category": "University entry",
+      "description": "Graduate assessment test preparation for MS and MPhil admissions.",
+      "access": "premium",
+      "sort": 6
+    },
+    {
+      "slug": "mpt",
+      "name": "CSS Screening (MPT)",
+      "full_name": "Screening Test",
+      "category": "Civil service",
+      "description": "Screening test preparation covering English, general ability and Islamiat.",
+      "access": "premium",
+      "sort": 7
+    },
+    {
+      "slug": "uni-entry",
+      "name": "University Entry (LUMS, IBA)",
+      "full_name": "Private University Admission",
+      "category": "University entry",
+      "description": "Aptitude style practice modelled on private university admission tests.",
+      "access": "mixed",
+      "sort": 8
+    },
+    {
+      "slug": "ppsc",
+      "name": "PPSC / FPSC",
+      "full_name": "Public Service Commission",
+      "category": "Civil service",
+      "description": "Public service commission general recruitment test practice sets.",
+      "access": "premium",
+      "sort": 9
+    },
+    {
+      "slug": "army",
+      "name": "Army / CAA Entry Tests",
+      "full_name": "Armed Forces & Aviation Entry",
+      "category": "Aptitude",
+      "description": "Initial test preparation for armed forces and aviation authority entry examinations.",
+      "access": "free",
+      "sort": 10
+    }
+  ],
+  "lat_subjects": [
+    {
+      "name": "Essay Writing",
+      "kind": "written",
+      "sort": 1
+    },
+    {
+      "name": "Personal Statement",
+      "kind": "written",
+      "sort": 2
+    },
+    {
+      "name": "English",
+      "kind": "mcq",
+      "sort": 3
+    },
+    {
+      "name": "General Knowledge",
+      "kind": "mcq",
+      "sort": 4
+    },
+    {
+      "name": "Pakistan Studies",
+      "kind": "mcq",
+      "sort": 5
+    },
+    {
+      "name": "Islamiat",
+      "kind": "mcq",
+      "sort": 6
+    },
+    {
+      "name": "Urdu",
+      "kind": "mcq",
+      "sort": 7
+    },
+    {
+      "name": "Mathematics",
+      "kind": "mcq",
+      "sort": 8
+    },
+    {
+      "name": "Logical Reasoning",
+      "kind": "mcq",
+      "sort": 9
+    }
+  ],
+  "extra_lat_subjects": [
+    "Logical Reasoning",
+    "English",
+    "Mathematics",
+    "General Knowledge",
+    "Pakistan Studies",
+    "Islamiat"
+  ],
+  "questions": [
+    {
+      "subject": "Logical Reasoning",
+      "topic": "Syllogisms",
+      "difficulty": "medium",
+      "text": "All members of the provincial bar association are licensed advocates. Some licensed advocates are also certified mediators. No certified mediator sits on the disciplinary committee.\n\nWhich one of the following must be true?",
+      "options": [
+        "No member of the provincial bar association sits on the disciplinary committee.",
+        "Some licensed advocates do not sit on the disciplinary committee.",
+        "Every certified mediator is a member of the provincial bar association.",
+        "All members of the disciplinary committee are certified mediators."
+      ],
+      "answer": 1,
+      "explanation": "Certified mediators cannot sit on the disciplinary committee, and some licensed advocates are certified mediators. Those advocates therefore cannot be on the committee, so option B must be true. Options A and D overstate the relationship, and C reverses the direction of the first statement."
+    },
+    {
+      "subject": "English",
+      "topic": "Vocabulary",
+      "difficulty": "easy",
+      "text": "Choose the word most nearly opposite in meaning to ‘candid’.",
+      "options": [
+        "Frank",
+        "Evasive",
+        "Honest",
+        "Open"
+      ],
+      "answer": 1,
+      "explanation": "‘Candid’ means open and honest. ‘Evasive’ means deliberately avoiding a direct answer, so it is the opposite."
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "Algebra",
+      "difficulty": "easy",
+      "text": "If 3x + 7 = 2x + 15, what is the value of x squared?",
+      "options": [
+        "16",
+        "64",
+        "8",
+        "49"
+      ],
+      "answer": 1,
+      "explanation": "Subtract 2x and 7 from both sides: x = 8. Then x squared is 64."
+    },
+    {
+      "subject": "General Knowledge",
+      "topic": "Constitutional history",
+      "difficulty": "medium",
+      "text": "The Objectives Resolution, which later became a substantive part of the Constitution of Pakistan, was passed by the Constituent Assembly in which year?",
+      "options": [
+        "1947",
+        "1949",
+        "1956",
+        "1962"
+      ],
+      "answer": 1,
+      "explanation": "The Objectives Resolution was passed on 12 March 1949 under Prime Minister Liaquat Ali Khan."
+    },
+    {
+      "subject": "Pakistan Studies",
+      "topic": "Freedom movement",
+      "difficulty": "easy",
+      "text": "The Lahore Resolution, demanding independent states for Muslims of South Asia, was passed in which year?",
+      "options": [
+        "1930",
+        "1935",
+        "1940",
+        "1946"
+      ],
+      "answer": 2,
+      "explanation": "The Lahore Resolution was presented at the All-India Muslim League session in Lahore in March 1940."
+    },
+    {
+      "subject": "Pakistan Studies",
+      "topic": "Constitutional history",
+      "difficulty": "medium",
+      "text": "Pakistan’s first Constitution came into force in which year?",
+      "options": [
+        "1947",
+        "1956",
+        "1962",
+        "1973"
+      ],
+      "answer": 1,
+      "explanation": "The first Constitution was enforced on 23 March 1956; later ones followed in 1962 and 1973."
+    },
+    {
+      "subject": "Islamiat",
+      "topic": "Quran",
+      "difficulty": "easy",
+      "text": "How many Surahs (chapters) are there in the Holy Quran?",
+      "options": [
+        "110",
+        "112",
+        "114",
+        "116"
+      ],
+      "answer": 2,
+      "explanation": "The Quran contains 114 Surahs."
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "Averages",
+      "difficulty": "easy",
+      "text": "What is the average of 12, 18, 24 and 30?",
+      "options": [
+        "19",
+        "20",
+        "21",
+        "22"
+      ],
+      "answer": 2,
+      "explanation": "The sum is 84; dividing by 4 numbers gives 21."
+    },
+    {
+      "subject": "English",
+      "topic": "Grammar",
+      "difficulty": "medium",
+      "text": "Choose the correct word to complete the sentence: Neither of the candidates ___ prepared for the interview.",
+      "options": [
+        "were",
+        "are",
+        "was",
+        "have been"
+      ],
+      "answer": 2,
+      "explanation": "‘Neither’ takes a singular verb, so ‘was’ is correct."
+    },
+    {
+      "subject": "Mathematics",
+      "topic": "Percentages",
+      "difficulty": "easy",
+      "text": "What is 20% of 450?",
+      "options": [
+        "80",
+        "85",
+        "90",
+        "95"
+      ],
+      "answer": 2,
+      "explanation": "20% = 1/5, and 450 ÷ 5 = 90."
+    },
+    {
+      "subject": "Logical Reasoning",
+      "topic": "Deduction",
+      "difficulty": "medium",
+      "text": "All roses are flowers. Some flowers fade quickly. Which conclusion must be true?",
+      "options": [
+        "Some roses fade quickly.",
+        "All flowers are roses.",
+        "Every rose is a flower.",
+        "No rose fades quickly."
+      ],
+      "answer": 2,
+      "explanation": "Only the first statement is certain: every rose is a flower. The others cannot be concluded from the premises."
+    },
+    {
+      "subject": "General Knowledge",
+      "topic": "Pakistan",
+      "difficulty": "easy",
+      "text": "Which city was the first capital of Pakistan?",
+      "options": [
+        "Lahore",
+        "Rawalpindi",
+        "Karachi",
+        "Islamabad"
+      ],
+      "answer": 2,
+      "explanation": "Karachi was the capital from 1947 until the capital moved to Rawalpindi and then Islamabad."
+    }
+  ]
+}
