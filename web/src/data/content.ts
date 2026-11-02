@@ -33,73 +33,17 @@ export const subjectAccuracy = [
   { subject: "Mathematics", value: 46 },
 ];
 
-export const plans = [
-  {
-    id: "free",
-    name: "Free",
-    blurb: "For students testing the waters before committing.",
-    price: 0,
-    per: "forever",
-    cta: "Start for free",
-    features: [
-      "300 practice MCQs per month",
-      "2 full-length mock tests",
-      "Basic accuracy summary",
-      "Answer explanations on practice",
-      "Community study materials",
-      "Access on mobile and desktop",
-    ],
-  },
-  {
-    id: "premium-monthly",
-    name: "Premium Monthly",
-    blurb: "For focused preparation in the final months.",
-    price: 1200,
-    per: "month",
-    badge: "Most popular",
-    highlight: true,
-    cta: "Go Premium",
-    features: [
-      "Unlimited practice MCQs",
-      "Unlimited full-length mock tests",
-      "Full performance analytics",
-      "Explanations on every question",
-      "All study materials and PDFs",
-      "Saved questions and revision lists",
-    ],
-  },
-  {
-    id: "premium-annual",
-    name: "Premium Annual",
-    blurb: "Best value for a complete preparation cycle.",
-    price: 9600,
-    per: "year",
-    badge: "Best value",
-    cta: "Choose annual",
-    features: [
-      "Everything in Premium Monthly",
-      "Two months free versus monthly",
-      "Priority access to new question sets",
-      "Downloadable past paper library",
-      "Leaderboard and peer comparison",
-      "Email support within 24 hours",
-    ],
-  },
-];
-
 export const comparison: [string, string, string, string][] = [
   ["Practice MCQs per month", "300", "Unlimited", "Unlimited"],
-  ["Full-length mock tests", "2", "Unlimited", "Unlimited"],
-  ["Answer explanations", "Practice only", "Every question", "Every question"],
-  ["Performance analytics", "Basic summary", "Full analytics", "Full analytics"],
-  ["Study materials and PDFs", "Community only", "All materials", "All materials"],
-  ["Saved question lists", "25 questions", "Unlimited", "Unlimited"],
-  ["Leaderboard and peer comparison", "—", "—", "Included"],
-  ["Support response time", "Help centre", "48 hours", "24 hours"],
+  ["Full-length mock tests per month", "2", "Unlimited", "Unlimited"],
+  ["Saved questions", "25", "Unlimited", "Unlimited"],
+  ["Premium mock tests", "—", "Included", "Included"],
+  ["Auto-renewal", "—", "No", "No"],
+  ["Access period", "Always", "30 days", "365 days"],
 ];
 
 export const pricingFaqs = [
-  { q: "Can I switch plans later?", a: "Yes. Upgrades apply immediately and the remaining value of your current plan is credited to the new one." },
+  { q: "Can I switch plans later?", a: "Yes. Premium starts as soon as your payment is confirmed. If you pay again while Premium is active, the new period is added after the current one, so you never lose days." },
   { q: "What happens when my plan ends?", a: "Your account reverts to the Free plan. Your history, saved questions and analytics stay intact." },
   { q: "Do you offer student discounts?", a: "Verified students at partner institutions get an additional reduction on the annual plan. Contact support with your student ID." },
 ];
@@ -110,7 +54,7 @@ export const faqs = [
   { q: "How close are mock tests to the real exam?", a: "Mocks follow the published section pattern, question count and time limit of each exam, with a live countdown and question palette." },
   { q: "Does PrepMaster work on mobile data?", a: "Yes. Pages are lightweight and question sets load in small batches, so practice works comfortably on mobile data." },
   { q: "Can I switch my target exam later?", a: "Anytime. Your subscription covers every exam, and your progress for each exam is kept separately." },
-  { q: "How do I cancel a Premium subscription?", a: "From Settings → Billing. You keep Premium access until the end of the period you have already paid for." },
+  { q: "How do I cancel a Premium subscription?", a: "There is nothing to cancel: Premium never renews by itself. It simply ends when the period you paid for is over, and you can extend it whenever you like." },
 ];
 
 export const formatPKR = (n: number) => `Rs ${n.toLocaleString("en-PK")}`;

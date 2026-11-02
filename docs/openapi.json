@@ -456,6 +456,57 @@
         "title": "CheckOut",
         "type": "object"
       },
+      "CheckoutIn": {
+        "properties": {
+          "plan_code": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Plan Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_code"
+        ],
+        "title": "CheckoutIn",
+        "type": "object"
+      },
+      "CheckoutOut": {
+        "properties": {
+          "action_url": {
+            "title": "Action Url",
+            "type": "string"
+          },
+          "fields": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Fields",
+            "type": "object"
+          },
+          "method": {
+            "enum": [
+              "GET",
+              "POST"
+            ],
+            "title": "Method",
+            "type": "string"
+          },
+          "payment_id": {
+            "format": "uuid",
+            "title": "Payment Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "payment_id",
+          "method",
+          "action_url",
+          "fields"
+        ],
+        "title": "CheckoutOut",
+        "type": "object"
+      },
       "DayActivity": {
         "properties": {
           "answered": {
@@ -587,6 +638,30 @@
           "mock_test_count"
         ],
         "title": "ExamSummary",
+        "type": "object"
+      },
+      "FakeCompleteIn": {
+        "properties": {
+          "outcome": {
+            "enum": [
+              "success",
+              "failure"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          },
+          "ref": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Ref",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ref",
+          "outcome"
+        ],
+        "title": "FakeCompleteIn",
         "type": "object"
       },
       "ForgotPasswordIn": {
@@ -862,6 +937,120 @@
           "text"
         ],
         "title": "OptionOut",
+        "type": "object"
+      },
+      "PaymentOut": {
+        "properties": {
+          "amount_paisa": {
+            "title": "Amount Paisa",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "paid_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Paid At"
+          },
+          "plan_name": {
+            "title": "Plan Name",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "plan_name",
+          "amount_paisa",
+          "status",
+          "provider",
+          "created_at",
+          "paid_at"
+        ],
+        "title": "PaymentOut",
+        "type": "object"
+      },
+      "PlanOut": {
+        "properties": {
+          "badge": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Badge"
+          },
+          "blurb": {
+            "title": "Blurb",
+            "type": "string"
+          },
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "features": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Features",
+            "type": "array"
+          },
+          "limits": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Limits",
+            "type": "object"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "period_days": {
+            "title": "Period Days",
+            "type": "integer"
+          },
+          "price_paisa": {
+            "title": "Price Paisa",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "blurb",
+          "price_paisa",
+          "period_days",
+          "limits",
+          "features",
+          "badge"
+        ],
+        "title": "PlanOut",
         "type": "object"
       },
       "PracticeSetIn": {
@@ -1541,6 +1730,60 @@
         "title": "SubjectOut",
         "type": "object"
       },
+      "SubscriptionOut": {
+        "properties": {
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "limits": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Limits",
+            "type": "object"
+          },
+          "plan_code": {
+            "title": "Plan Code",
+            "type": "string"
+          },
+          "plan_name": {
+            "title": "Plan Name",
+            "type": "string"
+          },
+          "premium": {
+            "title": "Premium",
+            "type": "boolean"
+          },
+          "resets_at": {
+            "format": "date-time",
+            "title": "Resets At",
+            "type": "string"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/UsageOut"
+          }
+        },
+        "required": [
+          "plan_code",
+          "plan_name",
+          "premium",
+          "ends_at",
+          "limits",
+          "usage",
+          "resets_at"
+        ],
+        "title": "SubscriptionOut",
+        "type": "object"
+      },
       "TargetExam": {
         "properties": {
           "date": {
@@ -1668,6 +1911,24 @@
           "submitted_at"
         ],
         "title": "TrendPoint",
+        "type": "object"
+      },
+      "UsageOut": {
+        "properties": {
+          "mcq_used": {
+            "title": "Mcq Used",
+            "type": "integer"
+          },
+          "mock_used": {
+            "title": "Mock Used",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "mcq_used",
+          "mock_used"
+        ],
+        "title": "UsageOut",
         "type": "object"
       },
       "UserOut": {
@@ -2332,6 +2593,130 @@
         ]
       }
     },
+    "/api/v1/billing/checkout": {
+      "post": {
+        "operationId": "checkout_api_v1_billing_checkout_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckoutOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Checkout",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/api/v1/billing/test-gateway/complete": {
+      "post": {
+        "description": "Stand-in for the gateway in development: pays or fails a pending payment.\n\nIt builds a correctly signed notification and runs it through the same code as a real\ncallback. Unavailable in production and whenever a real provider is configured.",
+        "operationId": "complete_test_payment_api_v1_billing_test_gateway_complete_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FakeCompleteIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Complete Test Payment",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/api/v1/billing/webhooks/{provider_name}": {
+      "post": {
+        "description": "Signed result from the gateway (JazzCash posts the shopper's browser here).\n\nAuthenticity comes from the signature, not from a cookie, so this path is exempt from the\nCSRF header check. Replays are harmless: each event is applied once.",
+        "operationId": "gateway_callback_api_v1_billing_webhooks__provider_name__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "provider_name",
+            "required": true,
+            "schema": {
+              "title": "Provider Name",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Gateway Callback",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
     "/api/v1/exams": {
       "get": {
         "operationId": "list_exams_api_v1_exams_get",
@@ -2670,6 +3055,74 @@
         ]
       }
     },
+    "/api/v1/me/payments": {
+      "get": {
+        "operationId": "my_payments_api_v1_me_payments_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PaymentOut"
+                  },
+                  "title": "Response My Payments Api V1 Me Payments Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "My Payments",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
+    "/api/v1/me/payments/{payment_id}": {
+      "get": {
+        "operationId": "my_payment_api_v1_me_payments__payment_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "payment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Payment Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "My Payment",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
     "/api/v1/me/progress": {
       "get": {
         "operationId": "my_progress_api_v1_me_progress_get",
@@ -2688,6 +3141,27 @@
         "summary": "My Progress",
         "tags": [
           "progress"
+        ]
+      }
+    },
+    "/api/v1/me/subscription": {
+      "get": {
+        "operationId": "my_subscription_api_v1_me_subscription_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "My Subscription",
+        "tags": [
+          "billing"
         ]
       }
     },
@@ -2786,6 +3260,31 @@
         "summary": "Start Mock",
         "tags": [
           "exam engine"
+        ]
+      }
+    },
+    "/api/v1/plans": {
+      "get": {
+        "operationId": "list_plans_api_v1_plans_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/PlanOut"
+                  },
+                  "title": "Response List Plans Api V1 Plans Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Plans",
+        "tags": [
+          "billing"
         ]
       }
     },

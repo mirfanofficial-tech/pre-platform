@@ -11,6 +11,7 @@ from app.core.errors import register_error_handlers
 from app.core.request_id import RequestIdMiddleware
 from app.db.session import dispose_engine
 from app.modules.attempts.router import router as attempts_router
+from app.modules.billing.router import router as billing_router
 from app.modules.catalog.router import router as catalog_router
 from app.modules.health.router import router as health_router
 from app.modules.progress.router import router as progress_router
@@ -37,6 +38,8 @@ def configure_logging() -> None:
 def create_app() -> FastAPI:
     configure_logging()
     settings = get_settings()
+    if settings.is_production and settings.payment_provider == "fake":
+        raise RuntimeError("PM_PAYMENT_PROVIDER=fake is not allowed in production")
     app = FastAPI(
         title="PrepMaster API",
         version=settings.app_version,
@@ -61,6 +64,7 @@ def create_app() -> FastAPI:
     app.include_router(attempts_router)
     app.include_router(study_router)
     app.include_router(progress_router)
+    app.include_router(billing_router)
     return app
 
 

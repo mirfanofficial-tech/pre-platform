@@ -18,6 +18,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { initials, useLogout, useMe } from "@/lib/auth";
+import { useSubscription } from "@/lib/billing";
 import { Logo } from "./site-header";
 import { cn } from "@/lib/utils";
 
@@ -49,6 +50,8 @@ const isActive = (pathname: string, href: string) => pathname === href || pathna
 export function AppSidebar() {
   const pathname = usePathname();
   const { data: user } = useMe();
+  const sub = useSubscription().data;
+  const mocksLeft = sub ? Math.max(0, (sub.limits.mock_per_month ?? 0) - sub.usage.mock_used) : 0;
   const logout = useLogout();
   const badge = user ? initials(user.full_name) : "";
   return (
@@ -77,20 +80,26 @@ export function AppSidebar() {
           </nav>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="hidden rounded-md bg-brand-50 p-4 lg:block">
-            <p className="text-sm font-semibold text-brand-900">Unlock unlimited mocks</p>
-            <p className="mt-1 text-xs text-ink-2">You have 1 free mock test left this month.</p>
-            <Link href="/pricing" className="mt-2 inline-block text-xs font-semibold text-brand-700">
-              Go Premium →
-            </Link>
-          </div>
+          {sub && !sub.premium && (
+            <div className="hidden rounded-md bg-brand-50 p-4 lg:block">
+              <p className="text-sm font-semibold text-brand-900">Unlock unlimited mocks</p>
+              <p className="mt-1 text-xs text-ink-2">
+                {mocksLeft === 0
+                  ? "You have used your free mock tests this month."
+                  : `You have ${mocksLeft} free mock test${mocksLeft === 1 ? "" : "s"} left this month.`}
+              </p>
+              <Link href="/pricing" className="mt-2 inline-block text-xs font-semibold text-brand-700">
+                Go Premium →
+              </Link>
+            </div>
+          )}
           <div className="flex items-center justify-center gap-3 lg:justify-start">
             <span className="grid size-9 shrink-0 place-items-center rounded-full bg-brand-100 text-[13px] font-bold text-brand-800">
               {badge}
             </span>
             <div className="hidden flex-1 lg:block">
               <p className="text-sm font-semibold">{user?.full_name}</p>
-              <p className="text-xs text-ink-3">Free plan</p>
+              <p className="text-xs text-ink-3">{sub?.premium ? sub.plan_name : "Free plan"}</p>
             </div>
             <button onClick={logout} aria-label="Log out" className="hidden text-ink-3 hover:text-ink lg:block">
               <LogOut size={16} />

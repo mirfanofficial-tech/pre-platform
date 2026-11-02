@@ -86,9 +86,10 @@ export function PracticeRunner() {
   const failure = createError ?? (attempt.error as Error | null);
   if (failure) {
     const empty = failure instanceof ApiError && failure.code === "no_questions";
+    const upgrade = failure instanceof ApiError && failure.code === "limit_reached";
     return (
       <Message
-        title={empty ? "No questions yet" : "Could not start practice"}
+        title={empty ? "No questions yet" : upgrade ? "Monthly limit reached" : "Could not start practice"}
         body={
           failure instanceof ApiError
             ? (failure.problem.detail ?? failure.problem.title)
@@ -99,7 +100,8 @@ export function PracticeRunner() {
             <ButtonLink href="/practice" variant="secondary">
               Back to practice
             </ButtonLink>
-            {!empty && (
+            {upgrade && <ButtonLink href="/pricing">See Premium plans</ButtonLink>}
+            {!empty && !upgrade && (
               <Button
                 onClick={() => {
                   setCreateError(null);
@@ -185,7 +187,13 @@ function Session({ state, exam, subject }: { state: AttemptState; exam: string; 
   };
 
   const reportFailure = (e: unknown) =>
-    setProblem(e instanceof ApiError ? e.problem.title : "Could not reach the server. Try again.");
+    setProblem(
+      e instanceof ApiError
+        ? e.code === "limit_reached"
+          ? (e.problem.detail ?? e.problem.title)
+          : e.problem.title
+        : "Could not reach the server. Try again.",
+    );
 
   const choose = async (optionId: string) => {
     setProblem("");

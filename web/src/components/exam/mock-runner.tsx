@@ -43,6 +43,7 @@ export function MockRunner() {
 
   if (error) {
     const code = error instanceof ApiError ? error.code : "";
+    const upgrade = code === "limit_reached" || code === "premium_required";
     return (
       <div className="grid min-h-screen place-items-center p-6">
         <Card className="max-w-[460px] text-center">
@@ -51,7 +52,9 @@ export function MockRunner() {
               ? "Confirm your email first"
               : code === "not_found"
                 ? "Mock test not found"
-                : "Could not start the mock test"}
+                : upgrade
+                  ? (error as ApiError).problem.title
+                  : "Could not start the mock test"}
           </h1>
           <p className="mt-2 text-sm text-ink-3">
             {code === "email_not_verified"
@@ -66,7 +69,8 @@ export function MockRunner() {
             <ButtonLink href={code === "email_not_verified" ? "/dashboard" : "/mock-tests"} variant="secondary">
               {code === "email_not_verified" ? "Go to dashboard" : "All mock tests"}
             </ButtonLink>
-            {code !== "email_not_verified" && code !== "not_found" && (
+            {upgrade && <ButtonLink href="/pricing">See Premium plans</ButtonLink>}
+            {code !== "email_not_verified" && code !== "not_found" && !upgrade && (
               <Button
                 onClick={() => {
                   setError(null);

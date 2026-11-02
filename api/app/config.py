@@ -22,6 +22,17 @@ class Settings(BaseSettings):
     lockout_minutes: int = 15
     email_backend: str = "console"
 
+    # Payments. "fake" is a local test gateway and is refused in production.
+    api_base_url: str = "http://localhost:8000"
+    payment_provider: str = "fake"
+    fake_gateway_secret: str = "dev-only-fake-gateway-secret"
+    jazzcash_endpoint: str = (
+        "https://sandbox.jazzcash.com.pk/CustomerPortal/transactionmanagement/merchantform/"
+    )
+    jazzcash_merchant_id: str = ""
+    jazzcash_password: str = ""
+    jazzcash_integrity_salt: str = ""
+
     @property
     def is_production(self) -> bool:
         return self.environment == "production"

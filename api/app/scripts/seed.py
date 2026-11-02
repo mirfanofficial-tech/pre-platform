@@ -16,10 +16,12 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker
 
 from app.db.session import dispose_engine, get_engine
 from app.modules.attempts.models import MockTest, MockTestQuestion
+from app.modules.billing.models import Plan
 from app.modules.catalog.hashing import question_hash
 from app.modules.catalog.models import Exam, Question, QuestionOption, Subject, Topic
 
 SEED_FILE = Path(__file__).resolve().parents[2] / "seed" / "demo.json"
+PLANS_FILE = Path(__file__).resolve().parents[2] / "seed" / "plans.json"
 LICENCE = "PrepMaster demo content"
 DEMO_MOCK_TITLE = "LAT Full Mock Test 10"
 DEMO_MOCK_SECONDS = 15 * 60
@@ -126,10 +128,23 @@ async def seed_demo(session: AsyncSession, data: dict[str, Any] | None = None) -
     return created
 
 
+async def seed_plans(session: AsyncSession) -> int:
+    """Create any missing plans. Existing plans are never overwritten, so prices you
+    have changed in the database stay as they are."""
+    created = 0
+    for item in json.loads(PLANS_FILE.read_text(encoding="utf-8")):
+        if await session.scalar(select(Plan.id).where(Plan.code == item["code"])) is None:
+            session.add(Plan(**item))
+            created += 1
+    await session.commit()
+    return created
+
+
 async def main() -> None:
     maker = async_sessionmaker(get_engine(), expire_on_commit=False)
     async with maker() as session:
         created = await seed_demo(session)
+        created["plans"] = await seed_plans(session)
     await dispose_engine()
     print("seeded:", ", ".join(f"{n} {k}" for k, n in created.items()))
 

@@ -273,7 +273,7 @@ Rough effort for **one full-time developer**; halve parallelisable parts with tw
 | **1. Identity and catalogue** ✅ *done 2026-10-28, with two gaps (see section 17)* | Users, sessions, register/verify/login/reset, roles; exams/subjects/topics/questions tables; seed script from current mock data; read-only catalogue API; web login + route protection | Real accounts work end to end; catalogue pages read from API | 2 wk |
 | **2. Exam engine** ✅ *done 2026-10-30, with gaps (see section 18)* | Attempts, snapshot, autosave, server timer, grading, practice answer endpoint, results/review, bookmarks, reports; web switched to the API; answers removed from bundle | A student can take practice and a mock fully server-side; tampering tests pass | 2–3 wk |
 | **3. Progress** 🟡 *dashboard and analytics done 2026-10-30; rest open (section 19)* | `topic_stats`, `daily_stats`, streaks, dashboard/analytics/recommendations/leaderboard APIs; web dashboard + analytics wired | Dashboard numbers come from real attempts | 1–2 wk |
-| **4. Billing** | Plans, usage counters, entitlements service, checkout, webhook, subscriptions, expiry job, reminders, payment history; web checkout/subscription | Sandbox payment upgrades an account exactly once, even with replayed webhooks | 2 wk |
+| **4. Billing** 🟡 *built with a test gateway and JazzCash code; JazzCash sandbox check pending (section 20)* | Plans, usage counters, entitlements service, checkout, webhook, subscriptions, expiry job, reminders, payment history; web checkout/subscription | Sandbox payment upgrades an account exactly once, even with replayed webhooks | 2 wk |
 | **5. Admin and content** | Admin CRUD, review workflow, CSV/XLSX import with error report, resources + R2 uploads and signed downloads, audit log, students and reports pages | Teacher can import, review and publish questions; students download materials | 2–3 wk |
 | **6. Scraper** | Sources registry, staging tables, one licensed source adapter, dedupe, candidate review UI, monitoring, takedown tool | One real source flows scrape → review → published with provenance | 2 wk |
 | **7. Hardening and launch** | Rate limits, security review, load test, backups + restore drill, Sentry, legal pages, Urdu/RTL decision, Playwright suite, beta with real students | Launch checklist (section 13) fully ticked | 2 wk |
@@ -398,3 +398,22 @@ Done:
 Not done yet in phase 3:
 - Sidebar "1 free mock test left" box is still static (arrives with plan limits in phase 4).
 - No "recommended practice set" yet; weak topics only link to the practice hub.
+
+## 20. Phase 4 result (2026-11-02)
+
+Decisions: **JazzCash** is the gateway (D6 closed). Plans and prices are suggestions the owner can change in the `plans` table: Free, Premium Monthly Rs 1,200 (30 days), Premium Annual Rs 12,000 (365 days, two months free). The old mock page showed Rs 9,600 for annual, which did not match its own "two months free" copy.
+
+Built:
+- **Tables (migration `0005`):** `plans`, `subscriptions`, `payments`, `payment_events` (idempotency log). No `usage_counters` table: monthly usage is derived from `attempt_answers` and `attempts` (months on Asia/Karachi), the same approach as progress.
+- **Endpoints:** `GET /plans` (public), `GET /me/subscription` (plan, end date, limits, usage, reset date), `GET /me/payments`, `GET /me/payments/{id}`, `POST /billing/checkout`, `POST /billing/webhooks/{provider}` (signed gateway callback, exempt from the CSRF header because it is authenticated by signature), and dev-only `POST /billing/test-gateway/complete`.
+- **Payment rules:** the price comes from the database, never the client; a confirmed email is required; the callback signature is verified; the amount must match; each gateway event is recorded once (unique key) and the payment row is locked, so replays, late "failed" messages after a success, and double delivery cannot grant access twice; paying early extends the current period; expiry is computed from `ends_at` (no nightly job needed yet).
+- **Gateway layer:** `PaymentProvider` interface with `FakeProvider` (dev and tests) and `JazzCashProvider` (hosted-page redirect, HMAC-SHA256 `pp_SecureHash`, refs of at most 20 characters, merchant password never stored). The app refuses to start in production with the fake provider.
+- **Limits enforced on the server** (`billing/entitlements.py`): free users get 300 practice answers and 2 mock tests per month and 25 saved questions; practice sets are trimmed to what is left; resuming an open mock test is free; premium-only mock tests need Premium. Premium has no limits.
+- **Web:** pricing and checkout read the API; checkout redirects to the gateway; a status page polls until the server confirms; the subscription page shows the plan, end date, usage and billing history; the sidebar shows the real free mock allowance (hidden for Premium); limit errors show an "See Premium plans" action. The hardcoded plans and payment-method list were removed, and the pricing comparison and FAQ were rewritten to say only what is enforced.
+- **Checks:** API 115 tests (ruff, mypy strict clean); web lint, 8 unit tests and production build pass; browser run 16/16 (pricing from API, unverified email blocked, successful payment, Premium shown, history, failed payment leaves Free, practice trimmed to the remaining 2, next set refused with an upgrade link, no page errors).
+
+Not done:
+- **JazzCash has not been run against their sandbox.** Needs the merchant credentials and a sandbox payment, decline and replay test (steps in `docs/RUNBOOK.md`). JazzCash's return POST is treated as the signed result; a status-inquiry call to double-check pending payments is not built.
+- Not enforced yet, so not promised on the pricing page: "explanations only on practice" for free users and basic-versus-full analytics.
+- No renewal reminder emails, no admin refunds or manual grants (phase 5), no invoice or receipt emails (email is still printed to the API log), no coupon codes.
+- Easypaisa and card payments are not offered; JazzCash's hosted page covers wallet and card.

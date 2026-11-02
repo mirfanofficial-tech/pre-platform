@@ -68,7 +68,7 @@ async def check_answer(
 ) -> CheckOut:
     """Practice mode only: record one answer and get the verdict and explanation."""
     attempt = await service.get_owned_attempt(session, user, attempt_id)
-    return await service.check_answer(session, attempt, question_id, data.option_id)
+    return await service.check_answer(session, user, attempt, question_id, data.option_id)
 
 
 @router.post("/attempts/{attempt_id}/submit", response_model=AttemptResult)

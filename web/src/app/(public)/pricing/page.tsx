@@ -15,7 +15,7 @@ export default function PricingPage() {
       <Section
         eyebrow="Pricing"
         title="One plan per student. No hidden add-ons."
-        lead="Every plan gives you the full question bank experience. Premium removes monthly limits and unlocks full analytics. Prices shown are placeholders while plans are finalised."
+        lead="Every plan gives you the full question bank experience. Premium removes the monthly limits and unlocks Premium mock tests. Prices shown are suggestions while plans are finalised."
       >
         <PlanCards />
       </Section>

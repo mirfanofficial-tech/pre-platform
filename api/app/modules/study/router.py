@@ -5,6 +5,7 @@ from sqlalchemy import select, update
 from sqlalchemy.dialects.postgresql import insert
 
 from app.core.errors import AppError
+from app.modules.billing.entitlements import check_bookmark
 from app.modules.catalog.models import Question, Subject, Topic
 from app.modules.study.models import Bookmark, QuestionReport
 from app.modules.study.schemas import BookmarkOut, ReportIn, ReportOut
@@ -40,6 +41,7 @@ async def list_bookmarks(user: CurrentUser, session: SessionDep) -> list[Bookmar
 @router.put("/me/bookmarks/{question_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def add_bookmark(question_id: uuid.UUID, user: CurrentUser, session: SessionDep) -> None:
     await _published_question(session, question_id)
+    await check_bookmark(session, user, question_id)
     await session.execute(
         insert(Bookmark)
         .values(user_id=user.id, question_id=question_id)

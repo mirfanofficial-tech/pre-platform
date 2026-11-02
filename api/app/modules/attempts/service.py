@@ -31,6 +31,7 @@ from app.modules.attempts.schemas import (
     SavedAnswer,
     SectionResult,
 )
+from app.modules.billing.entitlements import check_mock_start, limit_reached, mcq_allowance
 from app.modules.catalog.models import Exam, Question, QuestionOption, Subject, Topic
 from app.modules.users.models import User
 
@@ -217,6 +218,8 @@ async def start_mock(session: AsyncSession, user: User, mock_id: uuid.UUID) -> A
         if existing.status == "in_progress":
             return await build_state(session, existing)
 
+    await check_mock_start(session, user, mock.access)
+
     question_ids = list(
         await session.scalars(
             select(MockTestQuestion.question_id)
@@ -280,7 +283,11 @@ async def start_practice(session: AsyncSession, user: User, data: PracticeSetIn)
         label = subject.name
     if data.topic_id is not None:
         stmt = stmt.where(Question.topic_id == data.topic_id)
-    ids = list(await session.scalars(stmt.order_by(func.random()).limit(data.count)))
+    allowance = await mcq_allowance(session, user)
+    if allowance == 0:
+        raise limit_reached("practice questions")
+    count = data.count if allowance is None else min(data.count, allowance)
+    ids = list(await session.scalars(stmt.order_by(func.random()).limit(count)))
     if not ids:
         raise AppError(422, "no_questions", "There are no questions for that selection yet")
 
@@ -366,7 +373,11 @@ async def save_answers(session: AsyncSession, attempt: Attempt, items: list[Answ
 
 
 async def check_answer(
-    session: AsyncSession, attempt: Attempt, question_id: uuid.UUID, option_id: uuid.UUID
+    session: AsyncSession,
+    user: User,
+    attempt: Attempt,
+    question_id: uuid.UUID,
+    option_id: uuid.UUID,
 ) -> CheckOut:
     await _require_open(session, attempt)
     if attempt.mode != "practice":
@@ -386,6 +397,8 @@ async def check_answer(
     already = await session.get(AttemptAnswer, (attempt.id, question_id))
     if already is not None and already.is_correct is not None:
         raise AppError(409, "already_answered", "You already answered this question")
+    if await mcq_allowance(session, user) == 0:
+        raise limit_reached("practice questions")
 
     is_correct = chosen.id == correct.id
     await session.execute(

@@ -229,7 +229,7 @@ export default function LandingPage() {
         id="pricing"
         eyebrow="Pricing"
         title="Start free. Upgrade when you are serious."
-        lead="Prices shown are placeholders while plans are finalised. Every plan includes access on mobile and desktop."
+        lead="Prices shown are suggestions while plans are finalised. Every plan includes access on mobile and desktop."
       >
         <PlanCards />
       </Section>

@@ -2,45 +2,46 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { ShieldCheck } from "lucide-react";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Field } from "@/components/ui/field";
-import { formatPKR, plans } from "@/data/content";
-import { paymentMethods } from "@/data/extra";
-import { cn } from "@/lib/utils";
+import { ApiError } from "@/lib/api";
+import { formatPKR, goToGateway, periodLabel, startCheckout, useSubscription, useVisiblePlans } from "@/lib/billing";
 
 export function CheckoutForm() {
-  const params = useSearchParams();
-  const plan = plans.find((p) => p.id === params.get("plan")) ?? plans[1];
-  const total = plan.price;
-  const [method, setMethod] = useState("jazzcash");
-  const [status, setStatus] = useState<"idle" | "paying" | "paid">("idle");
+  const code = useSearchParams().get("plan") ?? "premium_monthly";
+  const { data: plans, isPending, error } = useVisiblePlans();
+  const subscription = useSubscription().data;
+  const plan = plans?.find((p) => p.code === code && p.price_paisa > 0);
 
-  if (status === "paid") {
+  const pay = useMutation({
+    mutationFn: () => startCheckout(code),
+    onSuccess: goToGateway,
+  });
+
+  if (isPending) return <p className="text-ink-3">Loading…</p>;
+  if (error || !plan) {
     return (
       <div className="text-center">
-        <CheckCircle2 size={48} className="mx-auto text-brand-600" />
-        <h1 className="mt-4 text-[28px] font-bold">Payment successful</h1>
-        <p className="mt-2 text-ink-3">
-          {plan.name} is now active. This is a demo checkout — no money was charged.
-        </p>
-        <ButtonLink href="/dashboard" className="mt-6">
-          Go to dashboard
+        <h1 className="text-[28px] font-bold">Plan not found</h1>
+        <p className="mt-2 text-ink-3">That plan is not available. Choose one from the pricing page.</p>
+        <ButtonLink href="/pricing" className="mt-6">
+          See plans
         </ButtonLink>
       </div>
     );
   }
 
+  const failure = pay.error instanceof ApiError ? pay.error : null;
+  const unverified = failure?.code === "email_not_verified";
+
   return (
     <form
       className="flex flex-col gap-5"
-      onSubmit={async (e) => {
+      onSubmit={(e) => {
         e.preventDefault();
-        setStatus("paying");
-        await new Promise((r) => setTimeout(r, 900));
-        setStatus("paid");
+        pay.mutate();
       }}
     >
       <div>
@@ -50,35 +51,48 @@ export function CheckoutForm() {
       <Card className="flex items-center justify-between p-5">
         <div>
           <p className="font-bold">{plan.name}</p>
-          <p className="text-xs text-ink-3">Billed per {plan.per}</p>
+          <p className="text-xs text-ink-3">
+            {plan.period_days} days of Premium · one payment, no auto-renewal
+          </p>
         </div>
-        <p className="text-xl font-extrabold">{formatPKR(total)}</p>
+        <p className="text-xl font-extrabold">
+          {formatPKR(plan.price_paisa)}
+          <span className="text-xs font-medium text-ink-3"> / {periodLabel(plan.period_days)}</span>
+        </p>
       </Card>
-      <fieldset className="flex flex-col gap-2">
-        <legend className="mb-2 text-[13px] font-medium">Payment method</legend>
-        {paymentMethods.map((m) => (
-          <label
-            key={m.id}
-            className={cn(
-              "flex cursor-pointer items-center gap-3 rounded-md border-2 p-3.5",
-              method === m.id ? "border-brand-600 bg-brand-50" : "border-line",
-            )}
-          >
-            <input type="radio" name="method" checked={method === m.id} onChange={() => setMethod(m.id)} />
-            <span>
-              <span className="block text-sm font-semibold">{m.label}</span>
-              <span className="text-xs text-ink-3">{m.hint}</span>
-            </span>
-          </label>
-        ))}
-      </fieldset>
-      {method === "card" ? (
-        <Field label="Card number" name="card" inputMode="numeric" placeholder="4242 4242 4242 4242" required />
-      ) : (
-        <Field label="Mobile account number" name="mobile" inputMode="tel" placeholder="03XX XXXXXXX" required />
+      {subscription?.premium && subscription.ends_at && (
+        <p className="rounded-md bg-brand-50 p-3 text-sm text-brand-900">
+          You already have Premium until {new Date(subscription.ends_at).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}.
+          Paying now adds {plan.period_days} days after that.
+        </p>
       )}
-      <Button type="submit" size="lg" disabled={status === "paying"}>
-        {status === "paying" ? "Processing…" : `Pay ${formatPKR(total)}`}
+      <div className="flex items-start gap-3 rounded-md border border-line p-4 text-sm">
+        <ShieldCheck size={18} className="mt-0.5 shrink-0 text-brand-600" />
+        <p className="text-ink-2">
+          You will pay on JazzCash’s secure page with your JazzCash mobile account or a card. PrepMaster never sees
+          your wallet PIN or card number.
+        </p>
+      </div>
+      {failure && (
+        <p role="alert" className="text-sm text-danger">
+          {failure.problem.detail ?? failure.problem.title}
+          {unverified && (
+            <>
+              {" "}
+              <Link href="/dashboard" className="font-semibold underline">
+                Go to dashboard
+              </Link>
+            </>
+          )}
+        </p>
+      )}
+      {pay.isError && !failure && (
+        <p role="alert" className="text-sm text-danger">
+          Could not reach the server. Try again.
+        </p>
+      )}
+      <Button type="submit" size="lg" disabled={pay.isPending || pay.isSuccess}>
+        {pay.isPending || pay.isSuccess ? "Taking you to JazzCash…" : `Pay ${formatPKR(plan.price_paisa)} with JazzCash`}
       </Button>
       <Link href="/pricing" className="text-center text-sm text-ink-3 hover:text-ink">
         ← Back to pricing

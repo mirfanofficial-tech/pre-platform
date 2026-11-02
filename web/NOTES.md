@@ -122,7 +122,8 @@ Compared with the mobile landing, dashboard, MCQ practice, timed mock, results a
 - **Phase 3 (partly done, 2026-10-30):** dashboard and analytics use `GET /me/progress` (`src/components/progress/*`, `getProgress` in `lib/exam.ts`). API 77 tests, browser 13/13. Details: `../docs/PLAN.md` section 19.
 - **Exam list and exam page** now use the API (`src/components/exams/*`); tags and invented counts were dropped. Practice hub reads `?exam=`.
 - **Leaderboard** on the API, opt-in (`src/components/progress/leaderboard-view.tsx`, toggle in Settings).
-- **Still mock data:** study materials, landing/pricing/admin. **No plan limits** until billing.
+- **Phase 4 (2026-11-02):** pricing, checkout, payment status, subscription and sidebar use the billing API (`src/lib/billing.ts`, `src/components/checkout/*`, `src/components/billing/*`). Hardcoded plans and payment methods removed. JazzCash needs a sandbox check; details in `../docs/PLAN.md` section 20 and `../docs/RUNBOOK.md`.
+- **Still mock data:** study materials, landing page content, admin screens. **No plan limits** until billing.
 - **Not done (phase 1):** email is only printed to the API log (no provider yet); exam discovery / LAT / practice / mock / results / analytics pages still use mock data; no IP rate limiting.
 - To log in during development: register in the web app, or run `create_admin` for a staff account (see `../docs/RUNBOOK.md`). Tokens for verify/reset links are in `docker compose logs api`.
 - Dev database runs on **port 5433** (a different PostgreSQL already owns 5432 here). Frontend dev server: port 3001 (3000 is another app).

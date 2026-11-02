@@ -1,0 +1,51 @@
+[
+  {
+    "code": "free",
+    "name": "Free",
+    "blurb": "For students testing the waters before committing.",
+    "price_paisa": 0,
+    "period_days": 0,
+    "limits": { "mcq_per_month": 300, "mock_per_month": 2, "saved_questions": 25 },
+    "features": [
+      "300 practice MCQs per month",
+      "2 full-length mock tests per month",
+      "Instant explanations while practising",
+      "Progress dashboard and analytics",
+      "Up to 25 saved questions"
+    ],
+    "badge": null,
+    "sort": 1
+  },
+  {
+    "code": "premium_monthly",
+    "name": "Premium Monthly",
+    "blurb": "For focused preparation in the final months.",
+    "price_paisa": 120000,
+    "period_days": 30,
+    "limits": {},
+    "features": [
+      "Unlimited practice MCQs",
+      "Unlimited full-length mock tests",
+      "Unlimited saved questions",
+      "Access to Premium mock tests",
+      "No auto-renewal: pay only when you choose to"
+    ],
+    "badge": "Most popular",
+    "sort": 2
+  },
+  {
+    "code": "premium_annual",
+    "name": "Premium Annual",
+    "blurb": "Best value for a complete preparation cycle.",
+    "price_paisa": 1200000,
+    "period_days": 365,
+    "limits": {},
+    "features": [
+      "Everything in Premium Monthly",
+      "Two months free compared with paying monthly",
+      "One payment for the whole preparation cycle"
+    ],
+    "badge": "Best value",
+    "sort": 3
+  }
+]

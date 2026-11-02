@@ -16,12 +16,6 @@ export const leaderboard = [
   { name: "Zainab Ali", city: "Faisalabad", score: 76, tests: 8 },
 ];
 
-export const paymentMethods = [
-  { id: "jazzcash", label: "JazzCash", hint: "Pay with your JazzCash mobile account" },
-  { id: "easypaisa", label: "Easypaisa", hint: "Pay with your Easypaisa mobile account" },
-  { id: "card", label: "Debit / credit card", hint: "Visa or Mastercard" },
-];
-
 export const adminStats = [
   ["Registered students", "18,420", "+486 this month"],
   ["Active this week", "6,180", "34% of all students"],

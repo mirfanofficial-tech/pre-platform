@@ -228,6 +228,69 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/billing/checkout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Checkout */
+        post: operations["checkout_api_v1_billing_checkout_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/billing/test-gateway/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Complete Test Payment
+         * @description Stand-in for the gateway in development: pays or fails a pending payment.
+         *
+         *     It builds a correctly signed notification and runs it through the same code as a real
+         *     callback. Unavailable in production and whenever a real provider is configured.
+         */
+        post: operations["complete_test_payment_api_v1_billing_test_gateway_complete_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/billing/webhooks/{provider_name}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Gateway Callback
+         * @description Signed result from the gateway (JazzCash posts the shopper's browser here).
+         *
+         *     Authenticity comes from the signature, not from a cookie, so this path is exempt from the
+         *     CSRF header check. Replays are harmless: each event is applied once.
+         */
+        post: operations["gateway_callback_api_v1_billing_webhooks__provider_name__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/exams": {
         parameters: {
             query?: never;
@@ -349,6 +412,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My Payments */
+        get: operations["my_payments_api_v1_me_payments_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/payments/{payment_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My Payment */
+        get: operations["my_payment_api_v1_me_payments__payment_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/progress": {
         parameters: {
             query?: never;
@@ -358,6 +455,23 @@ export interface paths {
         };
         /** My Progress */
         get: operations["my_progress_api_v1_me_progress_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My Subscription */
+        get: operations["my_subscription_api_v1_me_subscription_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -397,6 +511,23 @@ export interface paths {
          * @description Start a timed attempt, or resume the one already in progress.
          */
         post: operations["start_mock_api_v1_mock_tests__mock_id__attempts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Plans */
+        get: operations["list_plans_api_v1_plans_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -684,6 +815,30 @@ export interface components {
             /** Explanation */
             explanation: string;
         };
+        /** CheckoutIn */
+        CheckoutIn: {
+            /** Plan Code */
+            plan_code: string;
+        };
+        /** CheckoutOut */
+        CheckoutOut: {
+            /** Action Url */
+            action_url: string;
+            /** Fields */
+            fields: {
+                [key: string]: string;
+            };
+            /**
+             * Method
+             * @enum {string}
+             */
+            method: "GET" | "POST";
+            /**
+             * Payment Id
+             * Format: uuid
+             */
+            payment_id: string;
+        };
         /** DayActivity */
         DayActivity: {
             /** Answered */
@@ -737,6 +892,16 @@ export interface components {
             slug: string;
             /** Subject Count */
             subject_count: number;
+        };
+        /** FakeCompleteIn */
+        FakeCompleteIn: {
+            /**
+             * Outcome
+             * @enum {string}
+             */
+            outcome: "success" | "failure";
+            /** Ref */
+            ref: string;
         };
         /** ForgotPasswordIn */
         ForgotPasswordIn: {
@@ -850,6 +1015,50 @@ export interface components {
             position: number;
             /** Text */
             text: string;
+        };
+        /** PaymentOut */
+        PaymentOut: {
+            /** Amount Paisa */
+            amount_paisa: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Paid At */
+            paid_at: string | null;
+            /** Plan Name */
+            plan_name: string;
+            /** Provider */
+            provider: string;
+            /** Status */
+            status: string;
+        };
+        /** PlanOut */
+        PlanOut: {
+            /** Badge */
+            badge: string | null;
+            /** Blurb */
+            blurb: string;
+            /** Code */
+            code: string;
+            /** Features */
+            features: string[];
+            /** Limits */
+            limits: {
+                [key: string]: number;
+            };
+            /** Name */
+            name: string;
+            /** Period Days */
+            period_days: number;
+            /** Price Paisa */
+            price_paisa: number;
         };
         /** PracticeSetIn */
         PracticeSetIn: {
@@ -1089,6 +1298,27 @@ export interface components {
             /** Question Count */
             question_count: number;
         };
+        /** SubscriptionOut */
+        SubscriptionOut: {
+            /** Ends At */
+            ends_at: string | null;
+            /** Limits */
+            limits: {
+                [key: string]: number;
+            };
+            /** Plan Code */
+            plan_code: string;
+            /** Plan Name */
+            plan_name: string;
+            /** Premium */
+            premium: boolean;
+            /**
+             * Resets At
+             * Format: date-time
+             */
+            resets_at: string;
+            usage: components["schemas"]["UsageOut"];
+        };
         /** TargetExam */
         TargetExam: {
             /** Date */
@@ -1132,6 +1362,13 @@ export interface components {
             title: string;
             /** Type */
             type: string;
+        };
+        /** UsageOut */
+        UsageOut: {
+            /** Mcq Used */
+            mcq_used: number;
+            /** Mock Used */
+            mock_used: number;
         };
         /** UserOut */
         UserOut: {
@@ -1579,6 +1816,103 @@ export interface operations {
             };
         };
     };
+    checkout_api_v1_billing_checkout_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CheckoutIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CheckoutOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    complete_test_payment_api_v1_billing_test_gateway_complete_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FakeCompleteIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gateway_callback_api_v1_billing_webhooks__provider_name__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider_name: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_exams_api_v1_exams_get: {
         parameters: {
             query?: never;
@@ -1824,6 +2158,57 @@ export interface operations {
             };
         };
     };
+    my_payments_api_v1_me_payments_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentOut"][];
+                };
+            };
+        };
+    };
+    my_payment_api_v1_me_payments__payment_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaymentOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     my_progress_api_v1_me_progress_get: {
         parameters: {
             query?: never;
@@ -1840,6 +2225,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProgressOut"];
+                };
+            };
+        };
+    };
+    my_subscription_api_v1_me_subscription_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubscriptionOut"];
                 };
             };
         };
@@ -1902,6 +2307,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_plans_api_v1_plans_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PlanOut"][];
                 };
             };
         };
