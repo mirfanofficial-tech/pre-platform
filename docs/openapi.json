@@ -1,6 +1,172 @@
 {
   "components": {
     "schemas": {
+      "AdminPaymentPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPaymentRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "AdminPaymentPage",
+        "type": "object"
+      },
+      "AdminPaymentRow": {
+        "properties": {
+          "amount_paisa": {
+            "title": "Amount Paisa",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "paid_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Paid At"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "provider_ref": {
+            "title": "Provider Ref",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "student": {
+            "title": "Student",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "student",
+          "email",
+          "plan",
+          "amount_paisa",
+          "status",
+          "provider",
+          "provider_ref",
+          "created_at",
+          "paid_at"
+        ],
+        "title": "AdminPaymentRow",
+        "type": "object"
+      },
+      "AdminStats": {
+        "properties": {
+          "active_last_7_days": {
+            "title": "Active Last 7 Days",
+            "type": "integer"
+          },
+          "open_reports": {
+            "title": "Open Reports",
+            "type": "integer"
+          },
+          "pending_reviews": {
+            "title": "Pending Reviews",
+            "type": "integer"
+          },
+          "premium_now": {
+            "title": "Premium Now",
+            "type": "integer"
+          },
+          "questions_by_exam": {
+            "items": {
+              "$ref": "#/components/schemas/CountBy"
+            },
+            "title": "Questions By Exam",
+            "type": "array"
+          },
+          "questions_by_status": {
+            "items": {
+              "$ref": "#/components/schemas/CountBy"
+            },
+            "title": "Questions By Status",
+            "type": "array"
+          },
+          "revenue_this_month_paisa": {
+            "title": "Revenue This Month Paisa",
+            "type": "integer"
+          },
+          "revenue_total_paisa": {
+            "title": "Revenue Total Paisa",
+            "type": "integer"
+          },
+          "signups": {
+            "items": {
+              "$ref": "#/components/schemas/WeekPoint"
+            },
+            "title": "Signups",
+            "type": "array"
+          },
+          "students": {
+            "title": "Students",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "students",
+          "active_last_7_days",
+          "premium_now",
+          "revenue_this_month_paisa",
+          "revenue_total_paisa",
+          "questions_by_status",
+          "questions_by_exam",
+          "pending_reviews",
+          "open_reports",
+          "signups"
+        ],
+        "title": "AdminStats",
+        "type": "object"
+      },
       "AnswerIn": {
         "properties": {
           "clear": {
@@ -376,6 +542,59 @@
         "title": "AttemptSummary",
         "type": "object"
       },
+      "AuditRow": {
+        "properties": {
+          "action": {
+            "title": "Action",
+            "type": "string"
+          },
+          "actor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actor"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "entity": {
+            "title": "Entity",
+            "type": "string"
+          },
+          "entity_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Id"
+          },
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "actor",
+          "action",
+          "entity",
+          "entity_id",
+          "created_at"
+        ],
+        "title": "AuditRow",
+        "type": "object"
+      },
       "BookmarkOut": {
         "properties": {
           "question_id": {
@@ -505,6 +724,24 @@
           "fields"
         ],
         "title": "CheckoutOut",
+        "type": "object"
+      },
+      "CountBy": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ],
+        "title": "CountBy",
         "type": "object"
       },
       "DayActivity": {
@@ -678,6 +915,34 @@
         "title": "ForgotPasswordIn",
         "type": "object"
       },
+      "GrantIn": {
+        "properties": {
+          "days": {
+            "anyOf": [
+              {
+                "maximum": 3650.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Days"
+          },
+          "plan_code": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Plan Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_code"
+        ],
+        "title": "GrantIn",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -707,6 +972,60 @@
           "version"
         ],
         "title": "Health",
+        "type": "object"
+      },
+      "ImportError": {
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "row": {
+            "title": "Row",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "row",
+          "message"
+        ],
+        "title": "ImportError",
+        "type": "object"
+      },
+      "ImportResult": {
+        "properties": {
+          "created": {
+            "title": "Created",
+            "type": "integer"
+          },
+          "dry_run": {
+            "title": "Dry Run",
+            "type": "boolean"
+          },
+          "duplicates": {
+            "title": "Duplicates",
+            "type": "integer"
+          },
+          "errors": {
+            "items": {
+              "$ref": "#/components/schemas/ImportError"
+            },
+            "title": "Errors",
+            "type": "array"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "dry_run",
+          "total",
+          "created",
+          "duplicates",
+          "errors"
+        ],
+        "title": "ImportResult",
         "type": "object"
       },
       "LastAttempt": {
@@ -912,6 +1231,29 @@
           "last_attempt"
         ],
         "title": "MockTestOut",
+        "type": "object"
+      },
+      "OptionAdmin": {
+        "properties": {
+          "is_correct": {
+            "title": "Is Correct",
+            "type": "boolean"
+          },
+          "position": {
+            "title": "Position",
+            "type": "integer"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "position",
+          "text",
+          "is_correct"
+        ],
+        "title": "OptionAdmin",
         "type": "object"
       },
       "OptionOut": {
@@ -1301,6 +1643,212 @@
         "title": "ProgressOut",
         "type": "object"
       },
+      "QuestionAdminOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created By"
+          },
+          "difficulty": {
+            "title": "Difficulty",
+            "type": "string"
+          },
+          "exam": {
+            "title": "Exam",
+            "type": "string"
+          },
+          "explanation": {
+            "title": "Explanation",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/OptionAdmin"
+            },
+            "title": "Options",
+            "type": "array"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published At"
+          },
+          "reported_count": {
+            "title": "Reported Count",
+            "type": "integer"
+          },
+          "reviewed_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed By"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "subject_id": {
+            "format": "uuid",
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "exam",
+          "subject_id",
+          "subject",
+          "topic",
+          "difficulty",
+          "text",
+          "explanation",
+          "status",
+          "version",
+          "options",
+          "reported_count",
+          "created_by",
+          "reviewed_by",
+          "created_at",
+          "updated_at",
+          "published_at"
+        ],
+        "title": "QuestionAdminOut",
+        "type": "object"
+      },
+      "QuestionIn": {
+        "properties": {
+          "correct_index": {
+            "description": "0-based index into options",
+            "maximum": 5.0,
+            "minimum": 0.0,
+            "title": "Correct Index",
+            "type": "integer"
+          },
+          "difficulty": {
+            "default": "medium",
+            "enum": [
+              "easy",
+              "medium",
+              "hard"
+            ],
+            "title": "Difficulty",
+            "type": "string"
+          },
+          "exam": {
+            "description": "Exam slug",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Exam",
+            "type": "string"
+          },
+          "explanation": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Explanation",
+            "type": "string"
+          },
+          "options": {
+            "items": {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            "maxItems": 6,
+            "minItems": 2,
+            "title": "Options",
+            "type": "array"
+          },
+          "subject_id": {
+            "format": "uuid",
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "topic_name": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic Name"
+          }
+        },
+        "required": [
+          "exam",
+          "subject_id",
+          "text",
+          "options",
+          "correct_index"
+        ],
+        "title": "QuestionIn",
+        "type": "object"
+      },
       "QuestionOut": {
         "properties": {
           "difficulty": {
@@ -1353,6 +1901,99 @@
           "options"
         ],
         "title": "QuestionOut",
+        "type": "object"
+      },
+      "QuestionPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/QuestionRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "QuestionPage",
+        "type": "object"
+      },
+      "QuestionRow": {
+        "properties": {
+          "difficulty": {
+            "title": "Difficulty",
+            "type": "string"
+          },
+          "exam": {
+            "title": "Exam",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "reported_count": {
+            "title": "Reported Count",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "exam",
+          "subject",
+          "topic",
+          "difficulty",
+          "text",
+          "status",
+          "reported_count",
+          "updated_at"
+        ],
+        "title": "QuestionRow",
         "type": "object"
       },
       "RegisterIn": {
@@ -1454,6 +2095,88 @@
           "status"
         ],
         "title": "ReportOut",
+        "type": "object"
+      },
+      "ReportResolve": {
+        "properties": {
+          "status": {
+            "enum": [
+              "resolved",
+              "dismissed"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "ReportResolve",
+        "type": "object"
+      },
+      "ReportRow": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          },
+          "question_id": {
+            "format": "uuid",
+            "title": "Question Id",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "reporter": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reporter"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "question_id",
+          "question",
+          "reason",
+          "note",
+          "status",
+          "reporter",
+          "created_at"
+        ],
+        "title": "ReportRow",
         "type": "object"
       },
       "ResetPasswordIn": {
@@ -1673,6 +2396,138 @@
         "title": "StatusOut",
         "type": "object"
       },
+      "StudentPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StudentRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "StudentPage",
+        "type": "object"
+      },
+      "StudentPatch": {
+        "properties": {
+          "role": {
+            "anyOf": [
+              {
+                "enum": [
+                  "student",
+                  "editor",
+                  "reviewer",
+                  "admin"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "active",
+                  "suspended"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          }
+        },
+        "title": "StudentPatch",
+        "type": "object"
+      },
+      "StudentRow": {
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "email_verified": {
+            "title": "Email Verified",
+            "type": "boolean"
+          },
+          "full_name": {
+            "title": "Full Name",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "joined": {
+            "format": "date-time",
+            "title": "Joined",
+            "type": "string"
+          },
+          "last_seen": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Seen"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "role": {
+            "title": "Role",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "full_name",
+          "email",
+          "role",
+          "status",
+          "email_verified",
+          "plan",
+          "joined",
+          "last_seen"
+        ],
+        "title": "StudentRow",
+        "type": "object"
+      },
       "SubjectAccuracy": {
         "properties": {
           "answered": {
@@ -1880,6 +2735,25 @@
         "title": "TopicAccuracy",
         "type": "object"
       },
+      "TransitionIn": {
+        "properties": {
+          "to": {
+            "enum": [
+              "draft",
+              "in_review",
+              "published",
+              "archived"
+            ],
+            "title": "To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "to"
+        ],
+        "title": "TransitionIn",
+        "type": "object"
+      },
       "TrendPoint": {
         "properties": {
           "attempt_id": {
@@ -2051,6 +2925,25 @@
         ],
         "title": "ValidationError",
         "type": "object"
+      },
+      "WeekPoint": {
+        "properties": {
+          "signups": {
+            "title": "Signups",
+            "type": "integer"
+          },
+          "week_start": {
+            "format": "date",
+            "title": "Week Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "week_start",
+          "signups"
+        ],
+        "title": "WeekPoint",
+        "type": "object"
       }
     }
   },
@@ -2060,6 +2953,835 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/admin/audit": {
+      "get": {
+        "operationId": "get_audit_api_v1_admin_audit_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AuditRow"
+                  },
+                  "title": "Response Get Audit Api V1 Admin Audit Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Get Audit",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/payments": {
+      "get": {
+        "operationId": "list_payments_api_v1_admin_payments_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^(pending|paid|failed|refunded)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Payments",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/payments/{payment_id}/refund": {
+      "post": {
+        "operationId": "refund_payment_api_v1_admin_payments__payment_id__refund_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "payment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Payment Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Refund Payment",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/questions": {
+      "get": {
+        "operationId": "list_questions_api_v1_admin_questions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "exam",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Exam"
+            }
+          },
+          {
+            "in": "query",
+            "name": "subject_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Subject Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^(draft|in_review|published|archived)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Questions",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "create_question_api_v1_admin_questions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Question",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/questions/import": {
+      "post": {
+        "description": "Body is the raw CSV text (Content-Type: text/csv). Imports as drafts.",
+        "operationId": "import_questions_api_v1_admin_questions_import_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "exam",
+            "required": true,
+            "schema": {
+              "maxLength": 64,
+              "minLength": 1,
+              "title": "Exam",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "dry_run",
+            "required": false,
+            "schema": {
+              "default": true,
+              "title": "Dry Run",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Import Questions",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/questions/{question_id}": {
+      "get": {
+        "operationId": "get_question_api_v1_admin_questions__question_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "question_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Question Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Question",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "operationId": "update_question_api_v1_admin_questions__question_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "question_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Question Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuestionIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Question",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/questions/{question_id}/transition": {
+      "post": {
+        "operationId": "transition_question_api_v1_admin_questions__question_id__transition_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "question_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Question Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransitionIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QuestionAdminOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Transition Question",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/reports": {
+      "get": {
+        "operationId": "list_reports_api_v1_admin_reports_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "default": "open",
+              "pattern": "^(open|resolved|dismissed)$",
+              "title": "Status",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ReportRow"
+                  },
+                  "title": "Response List Reports Api V1 Admin Reports Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Reports",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/reports/{report_id}/resolve": {
+      "post": {
+        "operationId": "resolve_report_api_v1_admin_reports__report_id__resolve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportResolve"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resolve Report",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/stats": {
+      "get": {
+        "operationId": "get_stats_api_v1_admin_stats_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStats"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Get Stats",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/students": {
+      "get": {
+        "operationId": "list_students_api_v1_admin_students_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "role",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^(student|editor|reviewer|admin)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Role"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StudentPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Students",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/students/{student_id}": {
+      "patch": {
+        "operationId": "patch_student_api_v1_admin_students__student_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "student_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Student Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudentPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Patch Student",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/students/{student_id}/premium": {
+      "delete": {
+        "operationId": "revoke_premium_api_v1_admin_students__student_id__premium_delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "student_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Student Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Revoke Premium",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "grant_premium_api_v1_admin_students__student_id__premium_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "student_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Student Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Grant Premium",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/attempts/{attempt_id}": {
       "get": {
         "operationId": "get_attempt_api_v1_attempts__attempt_id__get",

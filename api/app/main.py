@@ -10,6 +10,7 @@ from app.core.csrf import CsrfMiddleware
 from app.core.errors import register_error_handlers
 from app.core.request_id import RequestIdMiddleware
 from app.db.session import dispose_engine
+from app.modules.admin.router import router as admin_router
 from app.modules.attempts.router import router as attempts_router
 from app.modules.billing.router import router as billing_router
 from app.modules.catalog.router import router as catalog_router
@@ -65,6 +66,7 @@ def create_app() -> FastAPI:
     app.include_router(study_router)
     app.include_router(progress_router)
     app.include_router(billing_router)
+    app.include_router(admin_router)
     return app
 
 

@@ -39,7 +39,7 @@ class Entitlement:
         return None if limit is None else max(0, limit - used)
 
 
-async def _month(session: AsyncSession) -> tuple[datetime, datetime]:
+async def month_bounds(session: AsyncSession) -> tuple[datetime, datetime]:
     local_now = func.timezone(TIMEZONE, func.now())
     start = func.timezone(TIMEZONE, func.date_trunc("month", local_now))
     nxt = func.timezone(
@@ -69,7 +69,7 @@ async def active_subscription(
 
 
 async def get_entitlement(session: AsyncSession, user: User) -> Entitlement:
-    month_start, resets_at = await _month(session)
+    month_start, resets_at = await month_bounds(session)
     mcq_used = (
         await session.scalar(
             select(func.count())

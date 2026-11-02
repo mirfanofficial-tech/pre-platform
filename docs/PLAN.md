@@ -274,7 +274,7 @@ Rough effort for **one full-time developer**; halve parallelisable parts with tw
 | **2. Exam engine** ✅ *done 2026-10-30, with gaps (see section 18)* | Attempts, snapshot, autosave, server timer, grading, practice answer endpoint, results/review, bookmarks, reports; web switched to the API; answers removed from bundle | A student can take practice and a mock fully server-side; tampering tests pass | 2–3 wk |
 | **3. Progress** 🟡 *dashboard and analytics done 2026-10-30; rest open (section 19)* | `topic_stats`, `daily_stats`, streaks, dashboard/analytics/recommendations/leaderboard APIs; web dashboard + analytics wired | Dashboard numbers come from real attempts | 1–2 wk |
 | **4. Billing** 🟡 *built with a test gateway and JazzCash code; JazzCash sandbox check pending (section 20)* | Plans, usage counters, entitlements service, checkout, webhook, subscriptions, expiry job, reminders, payment history; web checkout/subscription | Sandbox payment upgrades an account exactly once, even with replayed webhooks | 2 wk |
-| **5. Admin and content** | Admin CRUD, review workflow, CSV/XLSX import with error report, resources + R2 uploads and signed downloads, audit log, students and reports pages | Teacher can import, review and publish questions; students download materials | 2–3 wk |
+| **5. Admin and content** 🟡 *questions, import, students, payments, reports, audit done (section 21); exams/mock-test/material editors open* | Admin CRUD, review workflow, CSV/XLSX import with error report, resources + R2 uploads and signed downloads, audit log, students and reports pages | Teacher can import, review and publish questions; students download materials | 2–3 wk |
 | **6. Scraper** | Sources registry, staging tables, one licensed source adapter, dedupe, candidate review UI, monitoring, takedown tool | One real source flows scrape → review → published with provenance | 2 wk |
 | **7. Hardening and launch** | Rate limits, security review, load test, backups + restore drill, Sentry, legal pages, Urdu/RTL decision, Playwright suite, beta with real students | Launch checklist (section 13) fully ticked | 2 wk |
 
@@ -417,3 +417,21 @@ Not done:
 - Not enforced yet, so not promised on the pricing page: "explanations only on practice" for free users and basic-versus-full analytics.
 - No renewal reminder emails, no admin refunds or manual grants (phase 5), no invoice or receipt emails (email is still printed to the API log), no coupon codes.
 - Easypaisa and card payments are not offered; JazzCash's hosted page covers wallet and card.
+
+## 21. Phase 5 result (2026-11-02)
+
+Built (API under `/api/v1/admin`, web under `/admin`):
+- **Roles:** `editor` writes and submits; `reviewer` also approves, archives and handles reports; `admin` also manages students, money and the audit log. Students get 403 everywhere.
+- **Questions:** list (filters: exam, status, text search, paging), create, edit, and a review workflow: draft → in review → published → archived (with send-back and admin-only restore). A reviewer cannot approve a question they wrote (two-person rule; admins may self-approve, which suits a small team). Editors cannot change a published question; a reviewer's edit of a published question bumps its version. Exact duplicates (same text and options after normalising) are refused. Only published questions reach students.
+- **CSV import:** dry run first, then import as drafts. All or nothing: one bad row (unknown subject, bad answer letter, bad difficulty, fewer than two options) rejects the file and lists the row numbers. Duplicates inside the file or already in the bank are skipped. Limits: 1,000 rows, 2 MB.
+- **Students:** search and role filter, change role, suspend or reactivate (a suspended student is logged out on their next request), grant Premium for N days, revoke Premium. Admins cannot change their own role or status.
+- **Payments:** list with filter; refund marks a paid payment refunded and ends the Premium it bought. It does not move money: refund in the JazzCash portal too.
+- **Reported questions:** open, resolved and dismissed lists; mark resolved or dismiss.
+- **Overview:** real numbers (students, active in 7 days, Premium now, revenue this month and in total, questions by status and by exam, registrations per week, pending reviews, open reports).
+- **Audit log:** every admin write records who did what with before and after values, in the existing `audit_log` table (no new migration). Admin-only view of the latest 100.
+- **Checks:** API 137 tests (22 new: permission matrix, workflow and two-person rule, validation, duplicates, import edge cases, suspension, grants, refunds, reports, stats, audit); ruff and mypy strict clean; web lint, types, 8 unit tests and build pass; browser run 22/22 (student kept out, overview numbers, create to publish, duplicate refused, search, bad and good CSV, grant and revoke, report resolved, refund, suspend, audit log, phone widths, no page errors). The old mock admin components and data were deleted.
+
+Not done in phase 5:
+- Editors for exams, subjects, topics (subjects must already exist; topics are created by typing a name), mock tests (the demo mock test is still seeded from a file) and study materials. The admin menu entries for them still show "not part of the first release".
+- XLSX import (CSV only), question images, bulk status changes, per-question history view, admin-triggered password reset, CSV export of students or payments.
+- Rate limiting and an email notice when someone is suspended or refunded.

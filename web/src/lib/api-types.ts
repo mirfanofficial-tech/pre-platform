@@ -4,6 +4,233 @@
  */
 
 export interface paths {
+    "/api/v1/admin/audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Audit */
+        get: operations["get_audit_api_v1_admin_audit_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Payments */
+        get: operations["list_payments_api_v1_admin_payments_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/payments/{payment_id}/refund": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Refund Payment */
+        post: operations["refund_payment_api_v1_admin_payments__payment_id__refund_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/questions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Questions */
+        get: operations["list_questions_api_v1_admin_questions_get"];
+        put?: never;
+        /** Create Question */
+        post: operations["create_question_api_v1_admin_questions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/questions/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import Questions
+         * @description Body is the raw CSV text (Content-Type: text/csv). Imports as drafts.
+         */
+        post: operations["import_questions_api_v1_admin_questions_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/questions/{question_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Question */
+        get: operations["get_question_api_v1_admin_questions__question_id__get"];
+        /** Update Question */
+        put: operations["update_question_api_v1_admin_questions__question_id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/questions/{question_id}/transition": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transition Question */
+        post: operations["transition_question_api_v1_admin_questions__question_id__transition_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Reports */
+        get: operations["list_reports_api_v1_admin_reports_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/reports/{report_id}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Resolve Report */
+        post: operations["resolve_report_api_v1_admin_reports__report_id__resolve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Stats */
+        get: operations["get_stats_api_v1_admin_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/students": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Students */
+        get: operations["list_students_api_v1_admin_students_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/students/{student_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Patch Student */
+        patch: operations["patch_student_api_v1_admin_students__student_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/admin/students/{student_id}/premium": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Grant Premium */
+        post: operations["grant_premium_api_v1_admin_students__student_id__premium_post"];
+        /** Revoke Premium */
+        delete: operations["revoke_premium_api_v1_admin_students__student_id__premium_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/attempts/{attempt_id}": {
         parameters: {
             query?: never;
@@ -606,6 +833,69 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AdminPaymentPage */
+        AdminPaymentPage: {
+            /** Items */
+            items: components["schemas"]["AdminPaymentRow"][];
+            /** Page */
+            page: number;
+            /** Page Size */
+            page_size: number;
+            /** Total */
+            total: number;
+        };
+        /** AdminPaymentRow */
+        AdminPaymentRow: {
+            /** Amount Paisa */
+            amount_paisa: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Email */
+            email: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Paid At */
+            paid_at: string | null;
+            /** Plan */
+            plan: string;
+            /** Provider */
+            provider: string;
+            /** Provider Ref */
+            provider_ref: string;
+            /** Status */
+            status: string;
+            /** Student */
+            student: string;
+        };
+        /** AdminStats */
+        AdminStats: {
+            /** Active Last 7 Days */
+            active_last_7_days: number;
+            /** Open Reports */
+            open_reports: number;
+            /** Pending Reviews */
+            pending_reviews: number;
+            /** Premium Now */
+            premium_now: number;
+            /** Questions By Exam */
+            questions_by_exam: components["schemas"]["CountBy"][];
+            /** Questions By Status */
+            questions_by_status: components["schemas"]["CountBy"][];
+            /** Revenue This Month Paisa */
+            revenue_this_month_paisa: number;
+            /** Revenue Total Paisa */
+            revenue_total_paisa: number;
+            /** Signups */
+            signups: components["schemas"]["WeekPoint"][];
+            /** Students */
+            students: number;
+        };
         /** AnswerIn */
         AnswerIn: {
             /**
@@ -776,6 +1066,24 @@ export interface components {
              */
             type: "practice" | "mock";
         };
+        /** AuditRow */
+        AuditRow: {
+            /** Action */
+            action: string;
+            /** Actor */
+            actor: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Entity */
+            entity: string;
+            /** Entity Id */
+            entity_id: string | null;
+            /** Id */
+            id: number;
+        };
         /** BookmarkOut */
         BookmarkOut: {
             /**
@@ -838,6 +1146,13 @@ export interface components {
              * Format: uuid
              */
             payment_id: string;
+        };
+        /** CountBy */
+        CountBy: {
+            /** Name */
+            name: string;
+            /** Value */
+            value: number;
         };
         /** DayActivity */
         DayActivity: {
@@ -911,6 +1226,13 @@ export interface components {
              */
             email: string;
         };
+        /** GrantIn */
+        GrantIn: {
+            /** Days */
+            days?: number | null;
+            /** Plan Code */
+            plan_code: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -922,6 +1244,26 @@ export interface components {
             status: string;
             /** Version */
             version: string;
+        };
+        /** ImportError */
+        ImportError: {
+            /** Message */
+            message: string;
+            /** Row */
+            row: number;
+        };
+        /** ImportResult */
+        ImportResult: {
+            /** Created */
+            created: number;
+            /** Dry Run */
+            dry_run: boolean;
+            /** Duplicates */
+            duplicates: number;
+            /** Errors */
+            errors: components["schemas"]["ImportError"][];
+            /** Total */
+            total: number;
         };
         /** LastAttempt */
         LastAttempt: {
@@ -1000,6 +1342,15 @@ export interface components {
             title: string;
             /** Total Questions */
             total_questions: number;
+        };
+        /** OptionAdmin */
+        OptionAdmin: {
+            /** Is Correct */
+            is_correct: boolean;
+            /** Position */
+            position: number;
+            /** Text */
+            text: string;
         };
         /**
          * OptionOut
@@ -1135,6 +1486,90 @@ export interface components {
             /** Week */
             week: components["schemas"]["DayActivity"][];
         };
+        /** QuestionAdminOut */
+        QuestionAdminOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Created By */
+            created_by: string | null;
+            /** Difficulty */
+            difficulty: string;
+            /** Exam */
+            exam: string;
+            /** Explanation */
+            explanation: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Options */
+            options: components["schemas"]["OptionAdmin"][];
+            /** Published At */
+            published_at: string | null;
+            /** Reported Count */
+            reported_count: number;
+            /** Reviewed By */
+            reviewed_by: string | null;
+            /** Status */
+            status: string;
+            /** Subject */
+            subject: string;
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Text */
+            text: string;
+            /** Topic */
+            topic: string | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Version */
+            version: number;
+        };
+        /** QuestionIn */
+        QuestionIn: {
+            /**
+             * Correct Index
+             * @description 0-based index into options
+             */
+            correct_index: number;
+            /**
+             * Difficulty
+             * @default medium
+             * @enum {string}
+             */
+            difficulty: "easy" | "medium" | "hard";
+            /**
+             * Exam
+             * @description Exam slug
+             */
+            exam: string;
+            /**
+             * Explanation
+             * @default
+             */
+            explanation: string;
+            /** Options */
+            options: string[];
+            /**
+             * Subject Id
+             * Format: uuid
+             */
+            subject_id: string;
+            /** Text */
+            text: string;
+            /** Topic Name */
+            topic_name?: string | null;
+        };
         /** QuestionOut */
         QuestionOut: {
             /** Difficulty */
@@ -1154,6 +1589,44 @@ export interface components {
             text: string;
             /** Topic */
             topic: string | null;
+        };
+        /** QuestionPage */
+        QuestionPage: {
+            /** Items */
+            items: components["schemas"]["QuestionRow"][];
+            /** Page */
+            page: number;
+            /** Page Size */
+            page_size: number;
+            /** Total */
+            total: number;
+        };
+        /** QuestionRow */
+        QuestionRow: {
+            /** Difficulty */
+            difficulty: string;
+            /** Exam */
+            exam: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Reported Count */
+            reported_count: number;
+            /** Status */
+            status: string;
+            /** Subject */
+            subject: string;
+            /** Text */
+            text: string;
+            /** Topic */
+            topic: string | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
         };
         /** RegisterIn */
         RegisterIn: {
@@ -1191,6 +1664,42 @@ export interface components {
              * Format: uuid
              */
             id: string;
+            /** Status */
+            status: string;
+        };
+        /** ReportResolve */
+        ReportResolve: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "resolved" | "dismissed";
+        };
+        /** ReportRow */
+        ReportRow: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Note */
+            note: string | null;
+            /** Question */
+            question: string;
+            /**
+             * Question Id
+             * Format: uuid
+             */
+            question_id: string;
+            /** Reason */
+            reason: string;
+            /** Reporter */
+            reporter: string | null;
             /** Status */
             status: string;
         };
@@ -1273,6 +1782,51 @@ export interface components {
             /** Status */
             status: string;
         };
+        /** StudentPage */
+        StudentPage: {
+            /** Items */
+            items: components["schemas"]["StudentRow"][];
+            /** Page */
+            page: number;
+            /** Page Size */
+            page_size: number;
+            /** Total */
+            total: number;
+        };
+        /** StudentPatch */
+        StudentPatch: {
+            /** Role */
+            role?: ("student" | "editor" | "reviewer" | "admin") | null;
+            /** Status */
+            status?: ("active" | "suspended") | null;
+        };
+        /** StudentRow */
+        StudentRow: {
+            /** Email */
+            email: string;
+            /** Email Verified */
+            email_verified: boolean;
+            /** Full Name */
+            full_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Joined
+             * Format: date-time
+             */
+            joined: string;
+            /** Last Seen */
+            last_seen: string | null;
+            /** Plan */
+            plan: string;
+            /** Role */
+            role: string;
+            /** Status */
+            status: string;
+        };
         /** SubjectAccuracy */
         SubjectAccuracy: {
             /** Answered */
@@ -1350,6 +1904,14 @@ export interface components {
             /** Topic Id */
             topic_id: string;
         };
+        /** TransitionIn */
+        TransitionIn: {
+            /**
+             * To
+             * @enum {string}
+             */
+            to: "draft" | "in_review" | "published" | "archived";
+        };
         /** TrendPoint */
         TrendPoint: {
             /** Attempt Id */
@@ -1409,6 +1971,16 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /** WeekPoint */
+        WeekPoint: {
+            /** Signups */
+            signups: number;
+            /**
+             * Week Start
+             * Format: date
+             */
+            week_start: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -1418,6 +1990,503 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    get_audit_api_v1_admin_audit_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuditRow"][];
+                };
+            };
+        };
+    };
+    list_payments_api_v1_admin_payments_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminPaymentPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    refund_payment_api_v1_admin_payments__payment_id__refund_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_questions_api_v1_admin_questions_get: {
+        parameters: {
+            query?: {
+                exam?: string | null;
+                subject_id?: string | null;
+                status?: string | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuestionPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_question_api_v1_admin_questions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuestionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuestionAdminOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_questions_api_v1_admin_questions_import_post: {
+        parameters: {
+            query: {
+                exam: string;
+                dry_run?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportResult"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_question_api_v1_admin_questions__question_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                question_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuestionAdminOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_question_api_v1_admin_questions__question_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                question_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuestionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuestionAdminOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transition_question_api_v1_admin_questions__question_id__transition_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                question_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransitionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QuestionAdminOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_reports_api_v1_admin_reports_get: {
+        parameters: {
+            query?: {
+                status?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReportRow"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolve_report_api_v1_admin_reports__report_id__resolve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                report_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReportResolve"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_stats_api_v1_admin_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminStats"];
+                };
+            };
+        };
+    };
+    list_students_api_v1_admin_students_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                role?: string | null;
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StudentPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    patch_student_api_v1_admin_students__student_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudentPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_premium_api_v1_admin_students__student_id__premium_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GrantIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revoke_premium_api_v1_admin_students__student_id__premium_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_attempt_api_v1_attempts__attempt_id__get: {
         parameters: {
             query?: never;

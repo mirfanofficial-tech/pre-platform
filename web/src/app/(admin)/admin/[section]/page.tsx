@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { adminNav } from "@/data/extra";
 
-const skipped = ["students", "questions"];
+const skipped = ["students", "questions", "subscriptions", "reports", "audit"];
 const sections = adminNav.map((n) => n.href.split("/")[2]).filter((s) => s && !skipped.includes(s));
 
 export function generateStaticParams() {

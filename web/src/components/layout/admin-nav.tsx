@@ -6,10 +6,12 @@ import { Plus } from "lucide-react";
 import { Logo } from "./site-header";
 import { ButtonLink } from "@/components/ui/button";
 import { adminNav } from "@/data/extra";
+import { initials, useMe } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 
 export function AdminNav() {
   const pathname = usePathname();
+  const user = useMe().data;
   const active = (href: string) => (href === "/admin" ? pathname === href : pathname.startsWith(href));
   return (
     <>
@@ -40,11 +42,11 @@ export function AdminNav() {
         </div>
         <div className="flex items-center gap-3">
           <span className="grid size-9 place-items-center rounded-full bg-brand-100 text-[13px] font-bold text-brand-800">
-            SK
+            {user ? initials(user.full_name) : ""}
           </span>
           <div>
-            <p className="text-sm font-semibold">Sadia Khan</p>
-            <p className="text-xs text-ink-3">Content administrator</p>
+            <p className="text-sm font-semibold">{user?.full_name}</p>
+            <p className="text-xs capitalize text-ink-3">{user?.role}</p>
           </div>
         </div>
       </aside>

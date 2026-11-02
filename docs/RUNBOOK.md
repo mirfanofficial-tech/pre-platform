@@ -36,6 +36,11 @@ The seed is safe to run repeatedly. Without Docker use `.venv\Scripts\python -m 
 ## Trying the exam engine
 After seeding, register in the web app, open the verification link from the API log (see below), then open **Mock tests** and start "LAT Full Mock Test 10" (15 minutes, 12 questions). Practice sets start from **Practice MCQs**. Answers are never in the page: they are checked by the API.
 
+## Staff accounts and the admin console
+- Create the first admin with `python -m app.scripts.create_admin` (it prompts for the password). After that, admins can change roles in **Admin → Students**.
+- Roles: `editor` writes and submits questions; `reviewer` also approves, archives and handles reported questions; `admin` also manages students, payments, refunds and the audit log.
+- Question import: **Admin → Question Bank → Import CSV**. Columns: `subject, topic, difficulty, question, option_a … option_f, correct, explanation`. The subject must already exist for the exam. Check the file first; any bad row rejects the whole file.
+
 ## Plans, prices and payments
 - Plans live in the `plans` table (`api/seed/plans.json` holds the suggested ones: Free, Premium Monthly Rs 1,200 / 30 days, Premium Annual Rs 12,000 / 365 days). `python -m app.scripts.seed` creates any that are missing and **never overwrites** an existing row, so you can change a price in the database (`price_paisa` is in paisa: Rs 1,200 = 120000) and it stays. Free-plan limits are the `limits` JSON on the `free` row; a missing key means unlimited.
 - **Development:** `PM_PAYMENT_PROVIDER=fake` (the default). Checkout sends you to `/checkout/test-gateway` where you choose "Pay successfully" or "Fail the payment". It uses the same signed code path as a real callback. The API refuses to start in production with the fake provider.
