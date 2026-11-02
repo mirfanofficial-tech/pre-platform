@@ -432,6 +432,18 @@ Built (API under `/api/v1/admin`, web under `/admin`):
 - **Checks:** API 137 tests (22 new: permission matrix, workflow and two-person rule, validation, duplicates, import edge cases, suspension, grants, refunds, reports, stats, audit); ruff and mypy strict clean; web lint, types, 8 unit tests and build pass; browser run 22/22 (student kept out, overview numbers, create to publish, duplicate refused, search, bad and good CSV, grant and revoke, report resolved, refund, suspend, audit log, phone widths, no page errors). The old mock admin components and data were deleted.
 
 Not done in phase 5:
-- Editors for exams, subjects, topics (subjects must already exist; topics are created by typing a name), mock tests (the demo mock test is still seeded from a file) and study materials. The admin menu entries for them still show "not part of the first release".
+- Study materials editor (its menu entry still says "not part of the first release"; materials are still mock data on the student side), and an admin settings page.
+- Exams cannot be deleted (archive them), and a subject's order is set when it is created (no drag to reorder yet).
 - XLSX import (CSV only), question images, bulk status changes, per-question history view, admin-triggered password reset, CSV export of students or payments.
 - Rate limiting and an email notice when someone is suspended or refunded.
+
+## 22. Phase 5, part 2: exams, structure and mock-test builder (2026-11-02)
+
+Built:
+- **Exams (admin):** create and edit exams (name, full name, category, description, access, status, display order). The web address name (slug) is fixed after creation so links never break. Draft exams are hidden from students. Exams are archived, not deleted.
+- **Subjects (admin):** add, rename, change type (only while it has no questions), delete (only while it has no questions). **Topics (reviewer and admin):** add, rename, delete (only while unused). Editors can read the structure but not change it.
+- **Mock-test builder (reviewer and admin):** create a paper (exam, title, minutes, marks per question, full or sectional, everyone or Premium only), search published questions of that exam and add them, reorder (up and down), remove, publish, unpublish, archive. Only published questions of the same exam can be added; a paper cannot be published empty or while it contains a question that is no longer published; a published paper cannot be emptied. Papers students have taken cannot be deleted (archive them; their results are kept because each attempt stores its own copy of the questions).
+- A paper built here runs exactly as set: a browser test built a paper, published it, and a student received the questions in the order chosen.
+- Every change is written to the audit log (`exam.*`, `subject.*`, `topic.*`, `mock.*`).
+- **Fixes found on the way:** editing a mock test returned a 500 (a database-set `updated_at` was read without refreshing); the mock form overflowed on phone widths; the admin sidebar showed a hardcoded name.
+- **Checks:** API 147 tests (10 new); lint, types, unit tests and build pass; browser run 24/24 (exam list, new exam, subject and topic add, rename and delete, duplicate refused, subjects with questions protected, mock create, empty publish refused, add, reorder, remove, publish, the student sees it with real counts and gets the first question in the set order, audit, phone widths).

@@ -78,3 +78,43 @@ export const listAudit = () => api<AuditRow[]>(`${base}/audit`);
 export const IMPORT_TEMPLATE =
   "subject,topic,difficulty,question,option_a,option_b,option_c,option_d,correct,explanation\n" +
   'English,Tenses,easy,"Which sentence is correct?",He go home,He goes home,He going home,He gone home,B,Third person singular takes -s.\n';
+
+// ---- exams, subjects, topics ------------------------------------------------------------------
+export type ExamAdmin = S["ExamAdmin"];
+export type ExamBody = S["ExamIn"];
+export type ExamStructure = S["ExamStructure"];
+export type SubjectAdmin = S["SubjectAdmin"];
+
+export const listAdminExams = () => api<ExamAdmin[]>(`${base}/exams`);
+export const createExam = (body: ExamBody) => api<ExamAdmin>(`${base}/exams`, { method: "POST", body });
+export const updateExam = (slug: string, body: ExamBody) =>
+  api<ExamAdmin>(`${base}/exams/${slug}`, { method: "PUT", body });
+export const getStructure = (slug: string) => api<ExamStructure>(`${base}/exams/${slug}/structure`);
+
+type SubjectBody = { name: string; kind: "mcq" | "written"; sort: number };
+export const createSubject = (slug: string, body: SubjectBody) =>
+  api<SubjectAdmin>(`${base}/exams/${slug}/subjects`, { method: "POST", body });
+export const updateSubject = (id: string, body: SubjectBody) =>
+  api<void>(`${base}/subjects/${id}`, { method: "PUT", body });
+export const deleteSubject = (id: string) => api<void>(`${base}/subjects/${id}`, { method: "DELETE" });
+export const createTopic = (subjectId: string, name: string) =>
+  api<unknown>(`${base}/subjects/${subjectId}/topics`, { method: "POST", body: { name } });
+export const renameTopic = (id: string, name: string) =>
+  api<void>(`${base}/topics/${id}`, { method: "PUT", body: { name } });
+export const deleteTopic = (id: string) => api<void>(`${base}/topics/${id}`, { method: "DELETE" });
+
+// ---- mock tests ----------------------------------------------------------------------------------
+export type MockAdmin = S["MockAdmin"];
+export type MockDetail = S["MockDetail"];
+export type MockBody = S["MockIn"];
+
+export const listAdminMocks = () => api<MockAdmin[]>(`${base}/mock-tests`);
+export const getAdminMock = (id: string) => api<MockDetail>(`${base}/mock-tests/${id}`);
+export const createMock = (body: MockBody) => api<MockDetail>(`${base}/mock-tests`, { method: "POST", body });
+export const updateMock = (id: string, body: MockBody) =>
+  api<MockDetail>(`${base}/mock-tests/${id}`, { method: "PUT", body });
+export const setMockQuestions = (id: string, questionIds: string[]) =>
+  api<MockDetail>(`${base}/mock-tests/${id}/questions`, { method: "PUT", body: { question_ids: questionIds } });
+export const setMockStatus = (id: string, status: "draft" | "published" | "archived") =>
+  api<MockDetail>(`${base}/mock-tests/${id}/status`, { method: "PUT", body: { status } });
+export const deleteMock = (id: string) => api<void>(`${base}/mock-tests/${id}`, { method: "DELETE" });

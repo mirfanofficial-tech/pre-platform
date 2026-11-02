@@ -3,13 +3,21 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query, Request, Response, status
 
-from app.modules.admin import people, questions
+from app.modules.admin import catalog, mocks, people, questions
 from app.modules.admin.schemas import (
     AdminPaymentPage,
     AdminStats,
     AuditRow,
+    ExamAdmin,
+    ExamIn,
+    ExamStructure,
     GrantIn,
     ImportResult,
+    MockAdmin,
+    MockDetail,
+    MockIn,
+    MockQuestionsIn,
+    MockStatusIn,
     QuestionAdminOut,
     QuestionIn,
     QuestionPage,
@@ -17,6 +25,10 @@ from app.modules.admin.schemas import (
     ReportRow,
     StudentPage,
     StudentPatch,
+    SubjectAdmin,
+    SubjectIn,
+    TopicAdmin,
+    TopicIn,
     TransitionIn,
 )
 from app.modules.users.deps import SessionDep, require_role
@@ -178,4 +190,120 @@ async def list_payments(
 @router.post("/payments/{payment_id}/refund", status_code=204)
 async def refund_payment(payment_id: uuid.UUID, user: Admin, session: SessionDep) -> Response:
     await people.refund_payment(session, user, payment_id)
+    return Response(status_code=204)
+
+
+# ---- exams, subjects, topics ---------------------------------------------------------------
+
+
+@router.get("/exams", response_model=list[ExamAdmin])
+async def list_exams(_: Staff, session: SessionDep) -> list[ExamAdmin]:
+    return await catalog.list_exams(session)
+
+
+@router.post("/exams", response_model=ExamAdmin, status_code=status.HTTP_201_CREATED)
+async def create_exam(data: ExamIn, user: Admin, session: SessionDep) -> ExamAdmin:
+    return await catalog.create_exam(session, user, data)
+
+
+@router.put("/exams/{slug}", response_model=ExamAdmin)
+async def update_exam(slug: str, data: ExamIn, user: Admin, session: SessionDep) -> ExamAdmin:
+    return await catalog.update_exam(session, user, slug, data)
+
+
+@router.get("/exams/{slug}/structure", response_model=ExamStructure)
+async def exam_structure(slug: str, _: Staff, session: SessionDep) -> ExamStructure:
+    return await catalog.structure(session, slug)
+
+
+@router.post(
+    "/exams/{slug}/subjects", response_model=SubjectAdmin, status_code=status.HTTP_201_CREATED
+)
+async def create_subject(
+    slug: str, data: SubjectIn, user: Admin, session: SessionDep
+) -> SubjectAdmin:
+    return await catalog.create_subject(session, user, slug, data)
+
+
+@router.put("/subjects/{subject_id}", status_code=204)
+async def update_subject(
+    subject_id: uuid.UUID, data: SubjectIn, user: Admin, session: SessionDep
+) -> Response:
+    await catalog.update_subject(session, user, subject_id, data)
+    return Response(status_code=204)
+
+
+@router.delete("/subjects/{subject_id}", status_code=204)
+async def delete_subject(subject_id: uuid.UUID, user: Admin, session: SessionDep) -> Response:
+    await catalog.delete_subject(session, user, subject_id)
+    return Response(status_code=204)
+
+
+@router.post(
+    "/subjects/{subject_id}/topics", response_model=TopicAdmin, status_code=status.HTTP_201_CREATED
+)
+async def create_topic(
+    subject_id: uuid.UUID, data: TopicIn, user: Reviewer, session: SessionDep
+) -> TopicAdmin:
+    return await catalog.create_topic(session, user, subject_id, data)
+
+
+@router.put("/topics/{topic_id}", status_code=204)
+async def rename_topic(
+    topic_id: uuid.UUID, data: TopicIn, user: Reviewer, session: SessionDep
+) -> Response:
+    await catalog.rename_topic(session, user, topic_id, data)
+    return Response(status_code=204)
+
+
+@router.delete("/topics/{topic_id}", status_code=204)
+async def delete_topic(topic_id: uuid.UUID, user: Reviewer, session: SessionDep) -> Response:
+    await catalog.delete_topic(session, user, topic_id)
+    return Response(status_code=204)
+
+
+# ---- mock tests ----------------------------------------------------------------------------------
+
+
+@router.get("/mock-tests", response_model=list[MockAdmin])
+async def list_mock_tests(
+    _: Reviewer, session: SessionDep, exam: str | None = None
+) -> list[MockAdmin]:
+    return await mocks.list_mocks(session, exam)
+
+
+@router.post("/mock-tests", response_model=MockDetail, status_code=status.HTTP_201_CREATED)
+async def create_mock_test(data: MockIn, user: Reviewer, session: SessionDep) -> MockDetail:
+    return await mocks.create_mock(session, user, data)
+
+
+@router.get("/mock-tests/{mock_id}", response_model=MockDetail)
+async def get_mock_test(mock_id: uuid.UUID, _: Reviewer, session: SessionDep) -> MockDetail:
+    return await mocks.get_mock(session, mock_id)
+
+
+@router.put("/mock-tests/{mock_id}", response_model=MockDetail)
+async def update_mock_test(
+    mock_id: uuid.UUID, data: MockIn, user: Reviewer, session: SessionDep
+) -> MockDetail:
+    return await mocks.update_mock(session, user, mock_id, data)
+
+
+@router.put("/mock-tests/{mock_id}/questions", response_model=MockDetail)
+async def set_mock_questions(
+    mock_id: uuid.UUID, data: MockQuestionsIn, user: Reviewer, session: SessionDep
+) -> MockDetail:
+    return await mocks.set_questions(session, user, mock_id, data.question_ids)
+
+
+@router.put("/mock-tests/{mock_id}/status", response_model=MockDetail)
+async def set_mock_status(
+    mock_id: uuid.UUID, data: MockStatusIn, user: Reviewer, session: SessionDep
+) -> MockDetail:
+    return await mocks.set_status(session, user, mock_id, data.status)
+
+
+@router.delete("/mock-tests/{mock_id}", status_code=204)
+async def delete_mock_test(mock_id: uuid.UUID, user: Reviewer, session: SessionDep) -> Response:
+    await mocks.delete_mock(session, user, mock_id)
     return Response(status_code=204)

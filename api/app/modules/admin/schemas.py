@@ -200,3 +200,112 @@ class AuditRow(BaseModel):
     entity: str
     entity_id: str | None
     created_at: datetime
+
+
+# ---- exams, subjects and topics ----------------------------------------------------------
+
+Name = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=120)]
+
+
+class ExamIn(BaseModel):
+    slug: Annotated[str, StringConstraints(pattern=r"^[a-z0-9]+(-[a-z0-9]+)*$", max_length=64)]
+    name: Name
+    full_name: Annotated[
+        str, StringConstraints(strip_whitespace=True, min_length=1, max_length=200)
+    ]
+    category: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=64)]
+    description: Annotated[str, StringConstraints(strip_whitespace=True, max_length=1000)] = ""
+    access: Literal["free", "premium", "mixed"] = "mixed"
+    status: Literal["draft", "published", "archived"] = "draft"
+    sort: int = Field(default=0, ge=0, le=10000)
+
+
+class ExamAdmin(ExamIn):
+    id: uuid.UUID
+    subject_count: int
+    question_count: int
+    mock_count: int
+
+
+class SubjectIn(BaseModel):
+    name: Name
+    kind: Literal["mcq", "written"] = "mcq"
+    sort: int = Field(default=0, ge=0, le=10000)
+
+
+class TopicIn(BaseModel):
+    name: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=160)]
+
+
+class TopicAdmin(BaseModel):
+    id: uuid.UUID
+    name: str
+    question_count: int
+
+
+class SubjectAdmin(BaseModel):
+    id: uuid.UUID
+    name: str
+    kind: str
+    sort: int
+    question_count: int
+    topics: list[TopicAdmin]
+
+
+class ExamStructure(BaseModel):
+    exam: ExamAdmin
+    subjects: list[SubjectAdmin]
+
+
+# ---- mock tests ------------------------------------------------------------------------------
+
+
+class MockIn(BaseModel):
+    exam: str = Field(min_length=1, max_length=64, description="Exam slug")
+    title: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=200)]
+    kind: Literal["full", "sectional"] = "full"
+    duration_minutes: int = Field(ge=1, le=600)
+    marks_per_question: int = Field(default=1, ge=1, le=10)
+    access: Literal["free", "premium"] = "free"
+
+
+class MockAdmin(BaseModel):
+    id: uuid.UUID
+    exam: str
+    title: str
+    kind: str
+    duration_minutes: int
+    marks_per_question: int
+    access: str
+    status: str
+    question_count: int
+    attempts: int
+    updated_at: datetime
+
+
+class MockQuestionRow(BaseModel):
+    question_id: uuid.UUID
+    position: int
+    text: str
+    subject: str
+    difficulty: str
+    status: str
+
+
+class MockDetail(MockAdmin):
+    questions: list[MockQuestionRow]
+
+
+class MockQuestionsIn(BaseModel):
+    question_ids: list[uuid.UUID] = Field(max_length=300)
+
+    @field_validator("question_ids")
+    @classmethod
+    def unique(cls, value: list[uuid.UUID]) -> list[uuid.UUID]:
+        if len(set(value)) != len(value):
+            raise ValueError("A question can only appear once in a mock test")
+        return value
+
+
+class MockStatusIn(BaseModel):
+    status: Literal["draft", "published", "archived"]

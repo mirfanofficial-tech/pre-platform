@@ -124,7 +124,8 @@ Compared with the mobile landing, dashboard, MCQ practice, timed mock, results a
 - **Leaderboard** on the API, opt-in (`src/components/progress/leaderboard-view.tsx`, toggle in Settings).
 - **Phase 4 (2026-11-02):** pricing, checkout, payment status, subscription and sidebar use the billing API (`src/lib/billing.ts`, `src/components/checkout/*`, `src/components/billing/*`). Hardcoded plans and payment methods removed. JazzCash needs a sandbox check; details in `../docs/PLAN.md` section 20 and `../docs/RUNBOOK.md`.
 - **Phase 5 (2026-11-02):** admin console on the API (`src/lib/admin.ts`, `src/components/admin/*`): overview, question bank with editor and review workflow, CSV import, students, payments and refunds, reported questions, audit log. Mock admin components and data deleted. Details: `../docs/PLAN.md` section 21.
-- **Still mock data:** study materials, landing page content, and the admin placeholders for exams, mock tests, materials and settings. **No plan limits** until billing.
+- **Phase 5 part 2 (2026-11-02):** admin Exams & Subjects (`exams-admin.tsx`, `exam-structure.tsx`) and the mock-test builder (`mocks-admin.tsx`, `mock-builder.tsx`). Details: `../docs/PLAN.md` section 22.
+- **Still mock data:** study materials, landing page content, and the admin placeholders for materials and settings. **No plan limits** until billing.
 - **Not done (phase 1):** email is only printed to the API log (no provider yet); exam discovery / LAT / practice / mock / results / analytics pages still use mock data; no IP rate limiting.
 - To log in during development: register in the web app, or run `create_admin` for a staff account (see `../docs/RUNBOOK.md`). Tokens for verify/reset links are in `docker compose logs api`.
 - Dev database runs on **port 5433** (a different PostgreSQL already owns 5432 here). Frontend dev server: port 3001 (3000 is another app).

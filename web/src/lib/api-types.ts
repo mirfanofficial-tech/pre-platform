@@ -21,6 +21,146 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/exams": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Exams */
+        get: operations["list_exams_api_v1_admin_exams_get"];
+        put?: never;
+        /** Create Exam */
+        post: operations["create_exam_api_v1_admin_exams_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/exams/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Exam */
+        put: operations["update_exam_api_v1_admin_exams__slug__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/exams/{slug}/structure": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Exam Structure */
+        get: operations["exam_structure_api_v1_admin_exams__slug__structure_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/exams/{slug}/subjects": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Subject */
+        post: operations["create_subject_api_v1_admin_exams__slug__subjects_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/mock-tests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Mock Tests */
+        get: operations["list_mock_tests_api_v1_admin_mock_tests_get"];
+        put?: never;
+        /** Create Mock Test */
+        post: operations["create_mock_test_api_v1_admin_mock_tests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/mock-tests/{mock_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Mock Test */
+        get: operations["get_mock_test_api_v1_admin_mock_tests__mock_id__get"];
+        /** Update Mock Test */
+        put: operations["update_mock_test_api_v1_admin_mock_tests__mock_id__put"];
+        post?: never;
+        /** Delete Mock Test */
+        delete: operations["delete_mock_test_api_v1_admin_mock_tests__mock_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/mock-tests/{mock_id}/questions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set Mock Questions */
+        put: operations["set_mock_questions_api_v1_admin_mock_tests__mock_id__questions_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/mock-tests/{mock_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set Mock Status */
+        put: operations["set_mock_status_api_v1_admin_mock_tests__mock_id__status_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/payments": {
         parameters: {
             query?: never;
@@ -226,6 +366,59 @@ export interface paths {
         post: operations["grant_premium_api_v1_admin_students__student_id__premium_post"];
         /** Revoke Premium */
         delete: operations["revoke_premium_api_v1_admin_students__student_id__premium_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/subjects/{subject_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update Subject */
+        put: operations["update_subject_api_v1_admin_subjects__subject_id__put"];
+        post?: never;
+        /** Delete Subject */
+        delete: operations["delete_subject_api_v1_admin_subjects__subject_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/subjects/{subject_id}/topics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Topic */
+        post: operations["create_topic_api_v1_admin_subjects__subject_id__topics_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/topics/{topic_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Rename Topic */
+        put: operations["rename_topic_api_v1_admin_topics__topic_id__put"];
+        post?: never;
+        /** Delete Topic */
+        delete: operations["delete_topic_api_v1_admin_topics__topic_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1164,6 +1357,50 @@ export interface components {
              */
             day: string;
         };
+        /** ExamAdmin */
+        ExamAdmin: {
+            /**
+             * Access
+             * @default mixed
+             * @enum {string}
+             */
+            access: "free" | "premium" | "mixed";
+            /** Category */
+            category: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Full Name */
+            full_name: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Mock Count */
+            mock_count: number;
+            /** Name */
+            name: string;
+            /** Question Count */
+            question_count: number;
+            /** Slug */
+            slug: string;
+            /**
+             * Sort
+             * @default 0
+             */
+            sort: number;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "published" | "archived";
+            /** Subject Count */
+            subject_count: number;
+        };
         /** ExamDetail */
         ExamDetail: {
             /** Access */
@@ -1186,6 +1423,45 @@ export interface components {
             subject_count: number;
             /** Subjects */
             subjects: components["schemas"]["SubjectOut"][];
+        };
+        /** ExamIn */
+        ExamIn: {
+            /**
+             * Access
+             * @default mixed
+             * @enum {string}
+             */
+            access: "free" | "premium" | "mixed";
+            /** Category */
+            category: string;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Full Name */
+            full_name: string;
+            /** Name */
+            name: string;
+            /** Slug */
+            slug: string;
+            /**
+             * Sort
+             * @default 0
+             */
+            sort: number;
+            /**
+             * Status
+             * @default draft
+             * @enum {string}
+             */
+            status: "draft" | "published" | "archived";
+        };
+        /** ExamStructure */
+        ExamStructure: {
+            exam: components["schemas"]["ExamAdmin"];
+            /** Subjects */
+            subjects: components["schemas"]["SubjectAdmin"][];
         };
         /** ExamSummary */
         ExamSummary: {
@@ -1321,6 +1597,130 @@ export interface components {
              * @default true
              */
             remember: boolean;
+        };
+        /** MockAdmin */
+        MockAdmin: {
+            /** Access */
+            access: string;
+            /** Attempts */
+            attempts: number;
+            /** Duration Minutes */
+            duration_minutes: number;
+            /** Exam */
+            exam: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Marks Per Question */
+            marks_per_question: number;
+            /** Question Count */
+            question_count: number;
+            /** Status */
+            status: string;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** MockDetail */
+        MockDetail: {
+            /** Access */
+            access: string;
+            /** Attempts */
+            attempts: number;
+            /** Duration Minutes */
+            duration_minutes: number;
+            /** Exam */
+            exam: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Marks Per Question */
+            marks_per_question: number;
+            /** Question Count */
+            question_count: number;
+            /** Questions */
+            questions: components["schemas"]["MockQuestionRow"][];
+            /** Status */
+            status: string;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** MockIn */
+        MockIn: {
+            /**
+             * Access
+             * @default free
+             * @enum {string}
+             */
+            access: "free" | "premium";
+            /** Duration Minutes */
+            duration_minutes: number;
+            /**
+             * Exam
+             * @description Exam slug
+             */
+            exam: string;
+            /**
+             * Kind
+             * @default full
+             * @enum {string}
+             */
+            kind: "full" | "sectional";
+            /**
+             * Marks Per Question
+             * @default 1
+             */
+            marks_per_question: number;
+            /** Title */
+            title: string;
+        };
+        /** MockQuestionRow */
+        MockQuestionRow: {
+            /** Difficulty */
+            difficulty: string;
+            /** Position */
+            position: number;
+            /**
+             * Question Id
+             * Format: uuid
+             */
+            question_id: string;
+            /** Status */
+            status: string;
+            /** Subject */
+            subject: string;
+            /** Text */
+            text: string;
+        };
+        /** MockQuestionsIn */
+        MockQuestionsIn: {
+            /** Question Ids */
+            question_ids: string[];
+        };
+        /** MockStatusIn */
+        MockStatusIn: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "draft" | "published" | "archived";
         };
         /** MockTestOut */
         MockTestOut: {
@@ -1838,6 +2238,40 @@ export interface components {
             /** Percent */
             percent: number;
         };
+        /** SubjectAdmin */
+        SubjectAdmin: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Kind */
+            kind: string;
+            /** Name */
+            name: string;
+            /** Question Count */
+            question_count: number;
+            /** Sort */
+            sort: number;
+            /** Topics */
+            topics: components["schemas"]["TopicAdmin"][];
+        };
+        /** SubjectIn */
+        SubjectIn: {
+            /**
+             * Kind
+             * @default mcq
+             * @enum {string}
+             */
+            kind: "mcq" | "written";
+            /** Name */
+            name: string;
+            /**
+             * Sort
+             * @default 0
+             */
+            sort: number;
+        };
         /** SubjectOut */
         SubjectOut: {
             /**
@@ -1903,6 +2337,23 @@ export interface components {
             topic: string;
             /** Topic Id */
             topic_id: string;
+        };
+        /** TopicAdmin */
+        TopicAdmin: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Question Count */
+            question_count: number;
+        };
+        /** TopicIn */
+        TopicIn: {
+            /** Name */
+            name: string;
         };
         /** TransitionIn */
         TransitionIn: {
@@ -2006,6 +2457,389 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AuditRow"][];
+                };
+            };
+        };
+    };
+    list_exams_api_v1_admin_exams_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamAdmin"][];
+                };
+            };
+        };
+    };
+    create_exam_api_v1_admin_exams_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamAdmin"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_exam_api_v1_admin_exams__slug__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamAdmin"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    exam_structure_api_v1_admin_exams__slug__structure_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExamStructure"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_subject_api_v1_admin_exams__slug__subjects_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubjectIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubjectAdmin"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_mock_tests_api_v1_admin_mock_tests_get: {
+        parameters: {
+            query?: {
+                exam?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MockAdmin"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_mock_test_api_v1_admin_mock_tests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MockIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MockDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_mock_test_api_v1_admin_mock_tests__mock_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                mock_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MockDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_mock_test_api_v1_admin_mock_tests__mock_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                mock_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MockIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MockDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_mock_test_api_v1_admin_mock_tests__mock_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                mock_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_mock_questions_api_v1_admin_mock_tests__mock_id__questions_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                mock_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MockQuestionsIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MockDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_mock_status_api_v1_admin_mock_tests__mock_id__status_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                mock_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MockStatusIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MockDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -2464,6 +3298,165 @@ export interface operations {
             header?: never;
             path: {
                 student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_subject_api_v1_admin_subjects__subject_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubjectIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_subject_api_v1_admin_subjects__subject_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_topic_api_v1_admin_subjects__subject_id__topics_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                subject_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TopicIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TopicAdmin"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rename_topic_api_v1_admin_topics__topic_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                topic_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TopicIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_topic_api_v1_admin_topics__topic_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                topic_id: string;
             };
             cookie?: never;
         };

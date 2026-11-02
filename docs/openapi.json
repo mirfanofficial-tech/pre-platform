@@ -763,6 +763,96 @@
         "title": "DayActivity",
         "type": "object"
       },
+      "ExamAdmin": {
+        "properties": {
+          "access": {
+            "default": "mixed",
+            "enum": [
+              "free",
+              "premium",
+              "mixed"
+            ],
+            "title": "Access",
+            "type": "string"
+          },
+          "category": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Category",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 1000,
+            "title": "Description",
+            "type": "string"
+          },
+          "full_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Full Name",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "mock_count": {
+            "title": "Mock Count",
+            "type": "integer"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "question_count": {
+            "title": "Question Count",
+            "type": "integer"
+          },
+          "slug": {
+            "maxLength": 64,
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "title": "Slug",
+            "type": "string"
+          },
+          "sort": {
+            "default": 0,
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Sort",
+            "type": "integer"
+          },
+          "status": {
+            "default": "draft",
+            "enum": [
+              "draft",
+              "published",
+              "archived"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "subject_count": {
+            "title": "Subject Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "slug",
+          "name",
+          "full_name",
+          "category",
+          "id",
+          "subject_count",
+          "question_count",
+          "mock_count"
+        ],
+        "title": "ExamAdmin",
+        "type": "object"
+      },
       "ExamDetail": {
         "properties": {
           "access": {
@@ -822,6 +912,95 @@
           "subjects"
         ],
         "title": "ExamDetail",
+        "type": "object"
+      },
+      "ExamIn": {
+        "properties": {
+          "access": {
+            "default": "mixed",
+            "enum": [
+              "free",
+              "premium",
+              "mixed"
+            ],
+            "title": "Access",
+            "type": "string"
+          },
+          "category": {
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Category",
+            "type": "string"
+          },
+          "description": {
+            "default": "",
+            "maxLength": 1000,
+            "title": "Description",
+            "type": "string"
+          },
+          "full_name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Full Name",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "maxLength": 64,
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "title": "Slug",
+            "type": "string"
+          },
+          "sort": {
+            "default": 0,
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Sort",
+            "type": "integer"
+          },
+          "status": {
+            "default": "draft",
+            "enum": [
+              "draft",
+              "published",
+              "archived"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "name",
+          "full_name",
+          "category"
+        ],
+        "title": "ExamIn",
+        "type": "object"
+      },
+      "ExamStructure": {
+        "properties": {
+          "exam": {
+            "$ref": "#/components/schemas/ExamAdmin"
+          },
+          "subjects": {
+            "items": {
+              "$ref": "#/components/schemas/SubjectAdmin"
+            },
+            "title": "Subjects",
+            "type": "array"
+          }
+        },
+        "required": [
+          "exam",
+          "subjects"
+        ],
+        "title": "ExamStructure",
         "type": "object"
       },
       "ExamSummary": {
@@ -1176,6 +1355,274 @@
           "password"
         ],
         "title": "LoginIn",
+        "type": "object"
+      },
+      "MockAdmin": {
+        "properties": {
+          "access": {
+            "title": "Access",
+            "type": "string"
+          },
+          "attempts": {
+            "title": "Attempts",
+            "type": "integer"
+          },
+          "duration_minutes": {
+            "title": "Duration Minutes",
+            "type": "integer"
+          },
+          "exam": {
+            "title": "Exam",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "marks_per_question": {
+            "title": "Marks Per Question",
+            "type": "integer"
+          },
+          "question_count": {
+            "title": "Question Count",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "exam",
+          "title",
+          "kind",
+          "duration_minutes",
+          "marks_per_question",
+          "access",
+          "status",
+          "question_count",
+          "attempts",
+          "updated_at"
+        ],
+        "title": "MockAdmin",
+        "type": "object"
+      },
+      "MockDetail": {
+        "properties": {
+          "access": {
+            "title": "Access",
+            "type": "string"
+          },
+          "attempts": {
+            "title": "Attempts",
+            "type": "integer"
+          },
+          "duration_minutes": {
+            "title": "Duration Minutes",
+            "type": "integer"
+          },
+          "exam": {
+            "title": "Exam",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "marks_per_question": {
+            "title": "Marks Per Question",
+            "type": "integer"
+          },
+          "question_count": {
+            "title": "Question Count",
+            "type": "integer"
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/MockQuestionRow"
+            },
+            "title": "Questions",
+            "type": "array"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "exam",
+          "title",
+          "kind",
+          "duration_minutes",
+          "marks_per_question",
+          "access",
+          "status",
+          "question_count",
+          "attempts",
+          "updated_at",
+          "questions"
+        ],
+        "title": "MockDetail",
+        "type": "object"
+      },
+      "MockIn": {
+        "properties": {
+          "access": {
+            "default": "free",
+            "enum": [
+              "free",
+              "premium"
+            ],
+            "title": "Access",
+            "type": "string"
+          },
+          "duration_minutes": {
+            "maximum": 600.0,
+            "minimum": 1.0,
+            "title": "Duration Minutes",
+            "type": "integer"
+          },
+          "exam": {
+            "description": "Exam slug",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Exam",
+            "type": "string"
+          },
+          "kind": {
+            "default": "full",
+            "enum": [
+              "full",
+              "sectional"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "marks_per_question": {
+            "default": 1,
+            "maximum": 10.0,
+            "minimum": 1.0,
+            "title": "Marks Per Question",
+            "type": "integer"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "exam",
+          "title",
+          "duration_minutes"
+        ],
+        "title": "MockIn",
+        "type": "object"
+      },
+      "MockQuestionRow": {
+        "properties": {
+          "difficulty": {
+            "title": "Difficulty",
+            "type": "string"
+          },
+          "position": {
+            "title": "Position",
+            "type": "integer"
+          },
+          "question_id": {
+            "format": "uuid",
+            "title": "Question Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "question_id",
+          "position",
+          "text",
+          "subject",
+          "difficulty",
+          "status"
+        ],
+        "title": "MockQuestionRow",
+        "type": "object"
+      },
+      "MockQuestionsIn": {
+        "properties": {
+          "question_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 300,
+            "title": "Question Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "question_ids"
+        ],
+        "title": "MockQuestionsIn",
+        "type": "object"
+      },
+      "MockStatusIn": {
+        "properties": {
+          "status": {
+            "enum": [
+              "draft",
+              "published",
+              "archived"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "MockStatusIn",
         "type": "object"
       },
       "MockTestOut": {
@@ -2556,6 +3003,79 @@
         "title": "SubjectAccuracy",
         "type": "object"
       },
+      "SubjectAdmin": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "question_count": {
+            "title": "Question Count",
+            "type": "integer"
+          },
+          "sort": {
+            "title": "Sort",
+            "type": "integer"
+          },
+          "topics": {
+            "items": {
+              "$ref": "#/components/schemas/TopicAdmin"
+            },
+            "title": "Topics",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind",
+          "sort",
+          "question_count",
+          "topics"
+        ],
+        "title": "SubjectAdmin",
+        "type": "object"
+      },
+      "SubjectIn": {
+        "properties": {
+          "kind": {
+            "default": "mcq",
+            "enum": [
+              "mcq",
+              "written"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "sort": {
+            "default": 0,
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Sort",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "SubjectIn",
+        "type": "object"
+      },
       "SubjectOut": {
         "properties": {
           "id": {
@@ -2733,6 +3253,45 @@
           "percent"
         ],
         "title": "TopicAccuracy",
+        "type": "object"
+      },
+      "TopicAdmin": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "question_count": {
+            "title": "Question Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "question_count"
+        ],
+        "title": "TopicAdmin",
+        "type": "object"
+      },
+      "TopicIn": {
+        "properties": {
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "TopicIn",
         "type": "object"
       },
       "TransitionIn": {
@@ -2973,6 +3532,542 @@
           }
         },
         "summary": "Get Audit",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/exams": {
+      "get": {
+        "operationId": "list_exams_api_v1_admin_exams_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ExamAdmin"
+                  },
+                  "title": "Response List Exams Api V1 Admin Exams Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Exams",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "create_exam_api_v1_admin_exams_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExamIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExamAdmin"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Exam",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/exams/{slug}": {
+      "put": {
+        "operationId": "update_exam_api_v1_admin_exams__slug__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "title": "Slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExamIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExamAdmin"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Exam",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/exams/{slug}/structure": {
+      "get": {
+        "operationId": "exam_structure_api_v1_admin_exams__slug__structure_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "title": "Slug",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExamStructure"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Exam Structure",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/exams/{slug}/subjects": {
+      "post": {
+        "operationId": "create_subject_api_v1_admin_exams__slug__subjects_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "title": "Slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubjectAdmin"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Subject",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/mock-tests": {
+      "get": {
+        "operationId": "list_mock_tests_api_v1_admin_mock_tests_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "exam",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Exam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MockAdmin"
+                  },
+                  "title": "Response List Mock Tests Api V1 Admin Mock Tests Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Mock Tests",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "create_mock_test_api_v1_admin_mock_tests_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MockIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MockDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Mock Test",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/mock-tests/{mock_id}": {
+      "delete": {
+        "operationId": "delete_mock_test_api_v1_admin_mock_tests__mock_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mock_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Mock Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Mock Test",
+        "tags": [
+          "admin"
+        ]
+      },
+      "get": {
+        "operationId": "get_mock_test_api_v1_admin_mock_tests__mock_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mock_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Mock Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MockDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Mock Test",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "operationId": "update_mock_test_api_v1_admin_mock_tests__mock_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mock_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Mock Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MockIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MockDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Mock Test",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/mock-tests/{mock_id}/questions": {
+      "put": {
+        "operationId": "set_mock_questions_api_v1_admin_mock_tests__mock_id__questions_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mock_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Mock Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MockQuestionsIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MockDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Set Mock Questions",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/mock-tests/{mock_id}/status": {
+      "put": {
+        "operationId": "set_mock_status_api_v1_admin_mock_tests__mock_id__status_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "mock_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Mock Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MockStatusIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MockDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Set Mock Status",
         "tags": [
           "admin"
         ]
@@ -3777,6 +4872,219 @@
           }
         },
         "summary": "Grant Premium",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/subjects/{subject_id}": {
+      "delete": {
+        "operationId": "delete_subject_api_v1_admin_subjects__subject_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subject_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Subject Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Subject",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "operationId": "update_subject_api_v1_admin_subjects__subject_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subject_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Subject Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubjectIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Update Subject",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/subjects/{subject_id}/topics": {
+      "post": {
+        "operationId": "create_topic_api_v1_admin_subjects__subject_id__topics_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "subject_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Subject Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TopicIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TopicAdmin"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Topic",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/topics/{topic_id}": {
+      "delete": {
+        "operationId": "delete_topic_api_v1_admin_topics__topic_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "topic_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Topic Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Delete Topic",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "operationId": "rename_topic_api_v1_admin_topics__topic_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "topic_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Topic Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TopicIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rename Topic",
         "tags": [
           "admin"
         ]
